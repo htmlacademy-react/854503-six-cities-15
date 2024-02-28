@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Максим Ап](https://up.htmlacademy.ru/react/15/user/854503).
-* Наставник: `Неизвестно`.
+* Наставник: [Сергей Зуев](https://htmlacademy.ru/profile/ekzaton).
 
 ---
 
