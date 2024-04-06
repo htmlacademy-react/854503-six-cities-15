@@ -12,13 +12,15 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getRatingWidth } from '../../common/utils';
 import { AppRoute } from '../../const';
 import { MouseEvent, useEffect } from 'react';
-import { fetchNearbyOffersAction, fetchOfferDataAction, fetchReviewsAction } from '../../store/api-actions';
+import { fetchReviewsAction } from '../../store/api-actions';
 import OfferImage from './components/offer-image';
 import OfferGoods from './components/offer-goods';
 import OfferFeatures from './components/offer-features';
 import OfferHost from './components/offer-host';
 import { getCurrentCity } from '../../store/city/city.selectors';
 import { getAuthCheckedStatus } from '../../store/user-process/user-process.selectors';
+import { getDetailedOffer, getNearbyOffers } from '../../store/offers-process/offers-process.selectors';
+import { fetchNearbyOffersAction, fetchOfferDataAction } from '../../store/offers-process/offers-process.thunks';
 
 const MAP_CLASS = 'offer__map';
 const OFFER_BLOCK_CLASS = 'near-places';
@@ -33,9 +35,9 @@ export default function OfferPage({renderMap}: OfferPageProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const isAuth = useAppSelector(getAuthCheckedStatus);
-  const offerData: Offer | null = useAppSelector((state) => state.detailedOffer);
+  const offerData: Offer | null = useAppSelector(getDetailedOffer);
   const reviews: ReviewType[] = useAppSelector((state) => state.reviews);
-  const nearbyOffers: OfferCardType[] = useAppSelector((state) => state.nearbyOffers);
+  const nearbyOffers: OfferCardType[] = useAppSelector(getNearbyOffers);
   const city: City = useAppSelector(getCurrentCity);
 
   useEffect(() => {

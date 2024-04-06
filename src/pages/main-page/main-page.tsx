@@ -10,6 +10,7 @@ import { Cities, SORT_BY_VALUES } from '../../const';
 import { sortOffersByCity, sortOffersByValue } from '../../common/utils';
 import MainPageEmpty from './main-page-empty';
 import { getCurrentCity } from '../../store/city/city.selectors';
+import { getOffers } from '../../store/offers-process/offers-process.selectors';
 
 const MAP_CLASS = 'cities__map';
 const MAIN_LIST_CLASS = 'cities__places-list tabs__content';
@@ -24,7 +25,7 @@ export default function MainPage({renderMap}: MainPageProps) {
   const [currentSorting, setCurrentSorting] = useState<SortingType>(SORT_BY_VALUES[0]);
 
   const currentCity: City = useAppSelector(getCurrentCity);
-  const offers: OfferCardType[] = useAppSelector((state) => state.offers);
+  const offers: OfferCardType[] = useAppSelector(getOffers);
   const currentOffers: OfferCardType[] = sortOffersByCity(offers)[currentCity.name as Cities];
 
   const offersAmount = currentOffers.length || 0;
