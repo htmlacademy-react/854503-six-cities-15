@@ -97,3 +97,11 @@ export const CITIES_LOCATION: Record<CitiesNames, City> = {
     }
   }
 };
+
+export enum Endpoints {
+  Offers = '/offers',
+  Favorites = '/favorite',
+  Comments = '/comments',
+  Login = '/login',
+  Logout = '/logout'
+}

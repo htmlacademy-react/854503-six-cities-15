@@ -1,22 +1,25 @@
-import { Cities, RATING_WIDTH_STEP } from '../const';
-import { SortedCards } from '../types/common';
+import { RATING_WIDTH_STEP } from '../const';
+import { OffersSortedByCities } from '../types/common';
 import { OfferCardType } from '../types/offer';
 
-export function sortOffersByCity(offerCards: OfferCardType[]): SortedCards<typeof Cities> {
-  const proccessedOffers: SortedCards<typeof Cities> = {};
+export function sortOffersByCity(offerCards: OfferCardType[]): OffersSortedByCities {
+  const proccessedOffers: OffersSortedByCities = {
+    Paris: [],
+    Cologne: [],
+    Brussels: [],
+    Amsterdam: [],
+    Hamburg: [],
+    Dusseldorf: [],
+  };
 
   offerCards.forEach((offer: OfferCardType) => {
-    if (!proccessedOffers[offer.city.name]) {
-      proccessedOffers[offer.city.name] = [offer];
-    } else {
-      proccessedOffers[offer.city.name]!.push(offer);
-    }
+    proccessedOffers[offer.city.name].push(offer);
   });
 
   return proccessedOffers;
 }
 
-export function sortOffersByValue(offers: OfferCardType[], value: string) {
+export function sortOffersByValue(offers: OfferCardType[], value: string): OfferCardType[] {
   const copy = offers.slice();
 
   switch (value) {
