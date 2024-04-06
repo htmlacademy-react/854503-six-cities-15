@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import PageHeader from '../../components/page-header/page-header';
 import OffersList from '../../components/offers-list/offers-list';
-import { OfferCardType } from '../../types';
-import Map from '../../components/map/map';
+import { OfferCardType, RenderMapFunctionType } from '../../types';
 import { LocationType } from '../../types';
 import { MAIN_PAGE_MAP_CLASS } from '../../const';
 
@@ -11,9 +10,10 @@ type MainPageProps = {
   offersAmount: number;
   offerCards: OfferCardType[];
   defaultCityLocation: LocationType;
+  renderMap: RenderMapFunctionType;
 }
 
-export default function MainPage({offersAmount, offerCards, defaultCityLocation}: MainPageProps) {
+export default function MainPage({offersAmount, offerCards, defaultCityLocation, renderMap}: MainPageProps) {
   const [activeCard, setActiveCard] = useState<OfferCardType | null>(null);
 
   function onOfferCardMouseEnter(card: OfferCardType): void {
@@ -72,12 +72,7 @@ export default function MainPage({offersAmount, offerCards, defaultCityLocation}
               onOfferCardMouseEnter={onOfferCardMouseEnter}
             />
             <div className="cities__right-section">
-              <Map
-                cityLocation={defaultCityLocation}
-                points={offerCards}
-                activePoint={activeCard}
-                containerClass={MAIN_PAGE_MAP_CLASS}
-              />
+              {renderMap(defaultCityLocation, offerCards, activeCard, MAIN_PAGE_MAP_CLASS)}
             </div>
           </div>
         </div>
