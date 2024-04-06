@@ -1,10 +1,12 @@
+import { Cities } from '../const';
+
 export type Offer = {
   id: string;
   title: string;
   type: string;
   price: number;
   city: {
-    name: string;
+    name: keyof typeof Cities;
     location: {
       latitude: number;
       longitude: number;
@@ -37,7 +39,7 @@ export type OfferCardType = {
   type: string;
   price: number;
   city: {
-    name: string;
+    name: keyof typeof Cities;
     location: {
       latitude: number;
       longitude: number;

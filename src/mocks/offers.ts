@@ -9,13 +9,13 @@ export const OFFERS: Offer[] = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 55.35514938496378,
-        longitude: 5.673877537499948,
+        latitude: 52.35514938496378,
+        longitude: 4.673877537499948,
         zoom: 8
       }},
     location: {
-      latitude: 60.35514938496378,
-      longitude: 6.673877537499948,
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
       zoom: 8
     },
     isFavorite: true,
@@ -44,13 +44,13 @@ export const OFFERS: Offer[] = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 72.35514938496378,
-        longitude: 7.673877537499948,
+        latitude: 52.35514938496378,
+        longitude: 4.673877537499948,
         zoom: 8
       }},
     location: {
-      latitude: 22.35514938496378,
-      longitude: 2.673877537499948,
+      latitude: 52.3609553943508,
+      longitude: 4.85309666406198,
       zoom: 8
     },
     isFavorite: true,
@@ -77,15 +77,15 @@ export const OFFERS: Offer[] = [
     type: 'house',
     price: 90,
     city: {
-      name: 'Paris',
+      name: 'Amsterdam',
       location: {
-        latitude: 62.35514938496378,
+        latitude: 52.35514938496378,
         longitude: 4.673877537499948,
         zoom: 8
       }},
     location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
       zoom: 8
     },
     isFavorite: false,
@@ -112,15 +112,15 @@ export const OFFERS: Offer[] = [
     type: 'hotel',
     price: 30,
     city: {
-      name: 'Paris',
+      name: 'Amsterdam',
       location: {
-        latitude: 72.35514938496378,
-        longitude: 2.673877537499948,
+        latitude: 52.35514938496378,
+        longitude: 4.673877537499948,
         zoom: 8
       }},
     location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
       zoom: 8
     },
     isFavorite: false,
@@ -152,13 +152,13 @@ export const OFFER_CARDS: OfferCardType[] = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 55.35514938496378,
-        longitude: 5.673877537499948,
+        latitude: 52.35514938496378,
+        longitude: 4.673877537499948,
         zoom: 8
       }},
     location: {
-      latitude: 60.35514938496378,
-      longitude: 6.673877537499948,
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
       zoom: 8
     },
     isFavorite: true,
@@ -174,13 +174,13 @@ export const OFFER_CARDS: OfferCardType[] = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 72.35514938496378,
-        longitude: 7.673877537499948,
+        latitude: 52.35514938496378,
+        longitude: 4.673877537499948,
         zoom: 8
       }},
     location: {
-      latitude: 22.35514938496378,
-      longitude: 2.673877537499948,
+      latitude: 52.3609553943508,
+      longitude: 4.85309666406198,
       zoom: 8
     },
     isFavorite: true,
@@ -194,15 +194,15 @@ export const OFFER_CARDS: OfferCardType[] = [
     type: 'house',
     price: 90,
     city: {
-      name: 'Paris',
+      name: 'Amsterdam',
       location: {
-        latitude: 62.35514938496378,
+        latitude: 52.35514938496378,
         longitude: 4.673877537499948,
         zoom: 8
       }},
     location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
       zoom: 8
     },
     isFavorite: false,
@@ -216,15 +216,15 @@ export const OFFER_CARDS: OfferCardType[] = [
     type: 'hotel',
     price: 30,
     city: {
-      name: 'Paris',
+      name: 'Amsterdam',
       location: {
-        latitude: 72.35514938496378,
-        longitude: 2.673877537499948,
+        latitude: 52.35514938496378,
+        longitude: 4.673877537499948,
         zoom: 8
       }},
     location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
       zoom: 8
     },
     isFavorite: false,
