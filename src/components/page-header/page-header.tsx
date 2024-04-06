@@ -1,16 +1,16 @@
 import { Link } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { MouseEvent } from 'react';
-import { logoutAction } from '../../store/api-actions';
+import { logoutAction } from '../../store/user-process/user-process.thunks';
+import { getAuthCheckedStatus, getUserData } from '../../store/user-process/user-process.selectors';
 type PageHeaderProps = {
   isPlain: boolean;
 }
 
 export default function PageHeader({isPlain = false}: PageHeaderProps): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const userData = useAppSelector((state) => state.userData);
-  const isAuth = authorizationStatus === AuthorizationStatus.Auth;
+  const userData = useAppSelector(getUserData);
+  const isAuth = useAppSelector(getAuthCheckedStatus);
   const dispatch = useAppDispatch();
 
   function handleSignoutClick(evt: MouseEvent) {

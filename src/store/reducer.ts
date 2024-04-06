@@ -1,13 +1,10 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { OFFER_CARDS } from '../mocks/offers';
-import { loadDetailedOffer, loadNearbyOffers, loadOffers, loadReviews, loadUserReview, setAuthorizationStatus, setOffersDataLoadingStatus, setUserData } from './actions';
-import { Offer, OfferCardType, ReviewType, UserData } from '../types';
-import { AuthorizationStatus } from '../const';
+import { loadDetailedOffer, loadNearbyOffers, loadOffers, loadReviews, loadUserReview, setOffersDataLoadingStatus } from './actions';
+import { Offer, OfferCardType, ReviewType } from '../types';
 
 type State = {
-  userData: UserData | null;
   isOffersDataLoading: boolean;
-  authorizationStatus: AuthorizationStatus;
   offers: OfferCardType[];
   detailedOffer: Offer | null;
   reviews: ReviewType[];
@@ -15,9 +12,7 @@ type State = {
 }
 
 export const initialState: State = {
-  userData: null,
   isOffersDataLoading: false,
-  authorizationStatus: AuthorizationStatus.NoAuth,
   offers: OFFER_CARDS,
   detailedOffer: null,
   reviews: [],
@@ -37,12 +32,6 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setOffersDataLoadingStatus, (state, action) => {
       state.isOffersDataLoading = action.payload;
-    })
-    .addCase(setAuthorizationStatus, (state, action) => {
-      state.authorizationStatus = action.payload;
-    })
-    .addCase(setUserData, (state, action) => {
-      state.userData = action.payload;
     })
     .addCase(loadReviews, (state, action) => {
       state.reviews = action.payload;
