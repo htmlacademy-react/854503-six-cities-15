@@ -17,6 +17,7 @@ import OfferImage from './components/offer-image';
 import OfferGoods from './components/offer-goods';
 import OfferFeatures from './components/offer-features';
 import OfferHost from './components/offer-host';
+import { getCurrentCity } from '../../store/city/city.selectors';
 
 const MAP_CLASS = 'offer__map';
 const OFFER_BLOCK_CLASS = 'near-places';
@@ -34,7 +35,7 @@ export default function OfferPage({renderMap}: OfferPageProps): JSX.Element {
   const offerData: Offer | null = useAppSelector((state) => state.detailedOffer);
   const reviews: ReviewType[] = useAppSelector((state) => state.reviews);
   const nearbyOffers: OfferCardType[] = useAppSelector((state) => state.nearbyOffers);
-  const city: City = useAppSelector((state) => state.city);
+  const city: City = useAppSelector(getCurrentCity);
 
   useEffect(() => {
     if (!offerId) {
