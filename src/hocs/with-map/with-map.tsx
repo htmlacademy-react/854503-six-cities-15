@@ -1,7 +1,7 @@
 import { ComponentType } from 'react';
 import Map from '../../components/map/map';
-import { LocationType, OfferCardType } from '../../types';
 import { RenderMapFunctionType } from './types';
+import { City, OfferCardType } from '../../types';
 
 type HOCProps = {
   renderMap: RenderMapFunctionType;
@@ -15,10 +15,9 @@ export default function withMap<T>(Component: ComponentType<T>): ComponentType<O
     return (
       <Component
         {...props as T}
-        renderMap={(cityLocation: LocationType, points: OfferCardType[], activePoint: OfferCardType | null, containerClass: string) => (
+        renderMap={(city: City, activePoint: OfferCardType | null, containerClass: string) => (
           <Map
-            cityLocation={cityLocation}
-            points={points}
+            city={city}
             activePoint={activePoint}
             containerClass={containerClass}
           />

@@ -25,7 +25,6 @@ const MainPageWrapped = withMap(MainPage);
 export default function App({offerCards, offers, reviews}: AppComponentProps): JSX.Element {
   const offersAmount = offers.length;
   const cardsSortedByCity = sortOffersByCity(offerCards);
-  const defaultCityLocation = offerCards[0].city.location;
 
   return (
     <HelmetProvider>
@@ -39,7 +38,6 @@ export default function App({offerCards, offers, reviews}: AppComponentProps): J
                 <MainPageWrapped
                   offersAmount={offersAmount}
                   offerCards={offerCards}
-                  defaultCityLocation={defaultCityLocation}
                 />
               }
             />
@@ -59,8 +57,6 @@ export default function App({offerCards, offers, reviews}: AppComponentProps): J
               path={`${AppRoute.Offer}/:id`}
               element={
                 <OfferPageWrapped
-                  city={defaultCityLocation}
-                  offerCards={offerCards}
                   offers={offers}
                   reviews={reviews}
                 />

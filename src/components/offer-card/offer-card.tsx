@@ -5,15 +5,16 @@ import { ImageSizeType, OfferCardType } from '../../types';
 type OfferCardProps = {
   offerCard: OfferCardType;
   blockClass: string;
-  // cardClass?: string;
   imageSize?: ImageSizeType;
   onOfferCardMouseEnter?: (card: OfferCardType) => void;
+  onOfferCardMouseLeave?: () => void;
 }
 
 export default function OfferCard(props: OfferCardProps): JSX.Element {
   const {
     offerCard,
     onOfferCardMouseEnter,
+    onOfferCardMouseLeave,
     blockClass,
     imageSize = {
       width: 260,
@@ -24,6 +25,7 @@ export default function OfferCard(props: OfferCardProps): JSX.Element {
   return (
     <article
       onMouseEnter={() => onOfferCardMouseEnter && onOfferCardMouseEnter(offerCard)}
+      onMouseLeave={() => onOfferCardMouseLeave && onOfferCardMouseLeave()}
       className={`${blockClass}__card place-card`}
     >
       {
