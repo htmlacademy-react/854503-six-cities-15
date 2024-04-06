@@ -1,23 +1,23 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { OFFER_CARDS } from '../mocks/offers';
-import { changeCity, fillOffers, loadOffers, setOffersDataLoadingStatus } from './actions';
-import { City, OfferCardType } from '../types';
+import { changeCity, fillOffers, loadOffers, setAuthorizationStatus, setOffersDataLoadingStatus, setUserData } from './actions';
+import { City, OfferCardType, UserData } from '../types';
 import { AuthorizationStatus, CITIES_LOCATION } from '../const';
 
 type State = {
-  city: City;
-  offers: OfferCardType[];
-  currentCityOffers: OfferCardType[];
+  userData: UserData | null;
   isOffersDataLoading: boolean;
   authorizationStatus: AuthorizationStatus;
+  city: City;
+  offers: OfferCardType[];
 }
 
 export const initialState: State = {
-  city: CITIES_LOCATION.Paris,
-  offers: [],
-  currentCityOffers: [],
+  userData: null,
   isOffersDataLoading: false,
-  authorizationStatus: AuthorizationStatus.Unknown
+  authorizationStatus: AuthorizationStatus.NoAuth,
+  city: CITIES_LOCATION.Paris,
+  offers: OFFER_CARDS
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -29,9 +29,15 @@ export const reducer = createReducer(initialState, (builder) => {
       state.offers = [...OFFER_CARDS];
     })
     .addCase(loadOffers, (state, action) => {
-      state.offers = action.payload;
+      // state.offers = action.payload;
     })
     .addCase(setOffersDataLoadingStatus, (state, action) => {
       state.isOffersDataLoading = action.payload;
+    })
+    .addCase(setAuthorizationStatus, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setUserData, (state, action) => {
+      state.userData = action.payload;
     });
 });

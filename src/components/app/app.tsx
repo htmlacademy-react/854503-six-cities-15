@@ -1,6 +1,6 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import MainPage from '../../pages/main-page/main-page';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import LoginPage from '../../pages/login-page/login-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
@@ -11,6 +11,8 @@ import OfferPage from '../../pages/offer-page/offer-page';
 import withMap from '../../hocs/with-map/with-map';
 import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../loading-screen/loading-screen';
+import HistoryRouter from '../history-route/history-route';
+import { browserHistory } from '../../browser-history';
 
 const OfferPageWrapped = withMap(OfferPage);
 const MainPageWrapped = withMap(MainPage);
@@ -24,7 +26,7 @@ export default function App(): JSX.Element {
 
   return (
     <HelmetProvider>
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <ScrollToTop />
         <Routes>
           <Route path={AppRoute.Root}>
@@ -41,7 +43,7 @@ export default function App(): JSX.Element {
             <Route
               path={AppRoute.Favorites}
               element={
-                <PrivateRoute authStatus={AuthorizationStatus.Auth}>
+                <PrivateRoute>
                   <FavoritesPage />
                 </PrivateRoute>
               }
@@ -58,7 +60,7 @@ export default function App(): JSX.Element {
             element={<NotFoundPage />}
           />
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </HelmetProvider>
   );
 }
