@@ -3,11 +3,15 @@ import { OfferCardType } from '../../types/offer';
 
 type OfferCardProps = {
   offerCard: OfferCardType;
+  onOfferCardMouseEnter: (cardId: string) => void;
 }
 
-export default function OfferCard({offerCard}: OfferCardProps): JSX.Element {
+export default function OfferCard({offerCard, onOfferCardMouseEnter}: OfferCardProps): JSX.Element {
   return (
-    <article className="cities__card place-card">
+    <article
+      onMouseEnter={() => onOfferCardMouseEnter(offerCard.id)}
+      className="cities__card place-card"
+    >
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
           <img className="place-card__image" src={offerCard.previewImage} width="260" height="200" alt="Place image" />
