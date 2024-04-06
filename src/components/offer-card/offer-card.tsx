@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { ImageSizeType, OfferCardType } from '../../types';
 import { getRatingWidth } from '../../common/utils';
-import { fetchOfferDataAction } from '../../store/api-actions';
 import { useAppDispatch } from '../../hooks';
+import { fetchOfferDataAction } from '../../store/offers-process/offers-process.thunks';
 
 type OfferCardProps = {
   offerCard: OfferCardType;

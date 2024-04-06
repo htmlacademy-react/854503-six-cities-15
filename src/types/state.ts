@@ -1,4 +1,4 @@
-import { City, Offer, OfferCardType, UserData } from '.';
+import { City, Offer, OfferCardType, ReviewType, UserData } from '.';
 import { AuthorizationStatus } from '../const';
 import { store } from '../store';
 
@@ -20,4 +20,9 @@ export type OffersProcess = {
   offers: OfferCardType[];
   detailedOffer: Offer | null;
   nearbyOffers: OfferCardType[];
+}
+
+export type ReviewsProcess = {
+  isReviewsDataLoading: boolean;
+  reviews: ReviewType[];
 }
