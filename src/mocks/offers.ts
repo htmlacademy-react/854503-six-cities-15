@@ -1,4 +1,4 @@
-import { Offer, OfferCardType } from '../types/offer';
+import { Offer, OfferCardType } from '../types/index';
 
 export const OFFERS: Offer[] = [
   {

@@ -7,19 +7,25 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import { PrivateRoute } from '../private-route/private-route';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import { HelmetProvider } from 'react-helmet-async';
-import { Offer, OfferCardType } from '../../types/offer';
+import { Offer, OfferCardType } from '../../types';
 import OfferPage from '../../pages/offer-page/offer-page';
-import { OFFERS } from '../../mocks/offers';
 import { sortOffersByCity } from '../../common/utils';
+import { ReviewType } from '../../types';
+import withMap from '../../hocs/with-map/with-map';
 
 type AppComponentProps = {
   offerCards: OfferCardType[];
   offers: Offer[];
+  reviews: ReviewType[];
 }
 
-export default function App({offerCards, offers}: AppComponentProps): JSX.Element {
+const OfferPageWrapped = withMap(OfferPage);
+const MainPageWrapped = withMap(MainPage);
+
+export default function App({offerCards, offers, reviews}: AppComponentProps): JSX.Element {
   const offersAmount = offers.length;
   const cardsSortedByCity = sortOffersByCity(offerCards);
+  const defaultCityLocation = offerCards[0].city.location;
 
   return (
     <HelmetProvider>
@@ -29,7 +35,13 @@ export default function App({offerCards, offers}: AppComponentProps): JSX.Elemen
           <Route path={AppRoute.Root}>
             <Route
               index
-              element={<MainPage offersAmount={offersAmount} offerCards={offerCards}/>}
+              element={
+                <MainPageWrapped
+                  offersAmount={offersAmount}
+                  offerCards={offerCards}
+                  defaultCityLocation={defaultCityLocation}
+                />
+              }
             />
             <Route
               path={AppRoute.Login}
@@ -45,7 +57,14 @@ export default function App({offerCards, offers}: AppComponentProps): JSX.Elemen
             />
             <Route
               path={`${AppRoute.Offer}/:id`}
-              element={<OfferPage offers={OFFERS} />}
+              element={
+                <OfferPageWrapped
+                  city={defaultCityLocation}
+                  offerCards={offerCards}
+                  offers={offers}
+                  reviews={reviews}
+                />
+              }
             />
           </Route>
           <Route

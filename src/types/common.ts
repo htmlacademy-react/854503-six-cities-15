@@ -6,7 +6,12 @@ export type SortedCards<T> = Partial<Record<keyof T, OfferCardType[]>>;
 export type SortedCardsByCityType = SortedCards<typeof Cities>;
 
 export type LocationType = {
-    latitude: number;
-    longitude: number;
-    zoom: number;
+  latitude: number;
+  longitude: number;
+  zoom: number;
+}
+
+export type ImageSizeType = {
+  width: number;
+  height: number;
 }

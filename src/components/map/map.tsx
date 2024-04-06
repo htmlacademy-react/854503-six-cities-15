@@ -1,16 +1,16 @@
 import { useEffect, useRef } from 'react';
-import { OfferCardType } from '../../types/offer';
+import { OfferCardType } from '../../types';
 import useMap from './use-map';
-import { LocationType } from '../../types/common';
+import { LocationType } from '../../types';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from './const';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 type MapProps = {
-  // activeCardId: string | null;
   cityLocation: LocationType;
   points: OfferCardType[];
   activePoint: OfferCardType | null;
+  containerClass: string;
 }
 
 const defaultCustomIcon = leaflet.icon({
@@ -24,8 +24,8 @@ const currentCustomIcon = leaflet.icon({
   iconSize: [40, 40],
   iconAnchor: [20, 40],
 });
-//points
-export default function Map({cityLocation, points, activePoint}: MapProps): JSX.Element {
+
+export default function Map({cityLocation, points, activePoint, containerClass}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap({mapRef, cityLocation});
 
@@ -48,6 +48,6 @@ export default function Map({cityLocation, points, activePoint}: MapProps): JSX.
   }, [map, cityLocation, points, activePoint]);
 
   return (
-    <section ref={mapRef} className="cities__map map"></section>
+    <section ref={mapRef} className={`${containerClass} map`}></section>
   );
 }
