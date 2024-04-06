@@ -19,3 +19,5 @@ export const setAuthorizationStatus = createAction('user/setAuthorizationStatus'
 export const setUserData = createAction('user/setUserData', (data: UserData | null) => ({payload: data}));
 
 export const loadReviews = createAction('reviews/loadReviews', (reviews: ReviewType[]) => ({payload: reviews}));
+
+export const loadUserReview = createAction('reviews/loadUserReview', (review: ReviewType) => ({payload: review}));

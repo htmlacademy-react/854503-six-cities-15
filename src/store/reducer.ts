@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { OFFER_CARDS } from '../mocks/offers';
-import { changeCity, loadDetailedOffer, loadNearbyOffers, loadOffers, loadReviews, setAuthorizationStatus, setOffersDataLoadingStatus, setUserData } from './actions';
+import { changeCity, loadDetailedOffer, loadNearbyOffers, loadOffers, loadReviews, loadUserReview, setAuthorizationStatus, setOffersDataLoadingStatus, setUserData } from './actions';
 import { City, Offer, OfferCardType, ReviewType, UserData } from '../types';
 import { AuthorizationStatus, CITIES_LOCATION } from '../const';
 
@@ -51,5 +51,8 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadReviews, (state, action) => {
       state.reviews = action.payload;
+    })
+    .addCase(loadUserReview, (state, action) => {
+      state.reviews.push(action.payload);
     });
 });

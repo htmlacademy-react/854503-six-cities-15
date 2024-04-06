@@ -9,3 +9,11 @@ export type ReviewType = {
   comment: string;
   rating: number;
 }
+
+export type UserReview = {
+  offerId: string;
+  riview: {
+    comment: string;
+  rating: number;
+  };
+}

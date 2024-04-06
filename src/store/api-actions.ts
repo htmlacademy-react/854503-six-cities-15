@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppRoute, AuthorizationStatus, Endpoints } from '../const';
-import { loadDetailedOffer, loadNearbyOffers, loadOffers, loadReviews, redirectToRoute, setAuthorizationStatus, setOffersDataLoadingStatus, setUserData } from './actions';
-import { AppDispatch, Offer, ReviewType, State, UserData } from '../types';
+import { loadDetailedOffer, loadNearbyOffers, loadOffers, loadReviews, loadUserReview, redirectToRoute, setAuthorizationStatus, setOffersDataLoadingStatus, setUserData } from './actions';
+import { AppDispatch, Offer, ReviewType, State, UserData, UserReview } from '../types';
 import { AxiosInstance } from 'axios';
 import { OfferCardType, AuthData } from '../types';
 import { dropToken, saveToken } from '../services/token';
@@ -107,5 +107,23 @@ export const fetchReviewsAction = createAsyncThunk<void, string, {
     const {data} = await api.get<ReviewType[]>(`${Endpoints.Comments}/${offerId}`);
 
     dispatch(loadReviews(data));
+  }
+);
+
+export const postUserReviewAction = createAsyncThunk<void, UserReview, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'reviews/postUserReview',
+  async (userReview, {dispatch, extra: api}) => {
+    try {
+      const {data} = await api.post<ReviewType>(`${Endpoints.Comments}/${userReview.offerId}`, userReview.riview);
+
+      dispatch(loadUserReview(data));
+    } catch {
+      // eslint-disable-next-line no-console
+      console.log('error in postUserReview');
+    }
   }
 );
