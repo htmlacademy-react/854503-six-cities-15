@@ -1,8 +1,18 @@
 import { Helmet } from 'react-helmet-async';
 import PageHeader from '../../components/page-header/page-header';
+import { Offer } from '../../types/offer';
+import { useParams } from 'react-router-dom';
+import NotFoundPage from '../not-found-page/not-found-page';
 
-export default function OfferPage(): JSX.Element {
-  return (
+type OfferPageProps = {
+  offers: Offer[];
+}
+
+export default function OfferPage({offers}: OfferPageProps): JSX.Element {
+  const params = useParams();
+  const currentOffer = offers.find((offer) => offer.id === params.id);
+
+  return currentOffer ? (
     <div className="page">
       <Helmet>
         <title>6 cities. Offer</title>
@@ -311,5 +321,7 @@ export default function OfferPage(): JSX.Element {
         </div>
       </main>
     </div>
+  ) : (
+    <NotFoundPage />
   );
 }

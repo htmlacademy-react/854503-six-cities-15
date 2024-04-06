@@ -1,4 +1,5 @@
-import { RATING_STEP } from '../../const';
+import { Link } from 'react-router-dom';
+import { AppRoute, RATING_STEP } from '../../const';
 import { OfferCardType } from '../../types/offer';
 
 type FavoriteCardProps = {
@@ -16,9 +17,9 @@ export default function FavoriteCard({offerCard}: FavoriteCardProps): JSX.Elemen
           ''
       }
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={`${AppRoute.Offer}/${offerCard.id}`}>
           <img className="place-card__image" src={offerCard.previewImage} width="150" height="110" alt="Place image" />
-        </a>
+        </Link>
       </div>
       <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
@@ -40,7 +41,7 @@ export default function FavoriteCard({offerCard}: FavoriteCardProps): JSX.Elemen
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{offerCard.title}</a>
+          <Link to={`${AppRoute.Offer}/${offerCard.id}`}>{offerCard.title}</Link>
         </h2>
         <p className="place-card__type">{offerCard.type}</p>
       </div>
