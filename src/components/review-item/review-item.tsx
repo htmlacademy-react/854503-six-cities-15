@@ -1,4 +1,5 @@
-import { Months, RATING_STEP } from '../../const';
+import { getRatingWidth } from '../../common/utils';
+import { Months } from '../../const';
 import { ReviewType } from '../../types';
 
 type ReviewItemProps = {
@@ -25,7 +26,7 @@ export default function ReviewItem({review}: ReviewItemProps): JSX.Element {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: `${RATING_STEP * rating}%`}}></span>
+            <span style={{width: getRatingWidth(rating)}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

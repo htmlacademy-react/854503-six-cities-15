@@ -9,6 +9,7 @@ import { ReviewType } from '../../types';
 import { RenderMapFunctionType } from '../../types';
 import OffersList from '../../components/offers-list/offers-list';
 import { useAppSelector } from '../../hooks';
+import { getRatingWidth } from '../../common/utils';
 
 const MAP_CLASS = 'offer__map';
 const OFFER_BLOCK_CLASS = 'near-places';
@@ -73,7 +74,7 @@ export default function OfferPage(props: OfferPageProps): JSX.Element {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{width: '80%'}}></span>
+                  <span style={{width: getRatingWidth(currentOffer.rating)}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">4.8</span>
