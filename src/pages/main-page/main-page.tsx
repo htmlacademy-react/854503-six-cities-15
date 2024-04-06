@@ -6,10 +6,10 @@ import { useState } from 'react';
 
 type MainPageProps = {
   offersAmount: number;
-  offersCards: OfferCardType[];
+  offerCards: OfferCardType[];
 }
 
-export default function MainPage({offersAmount, offersCards}: MainPageProps) {
+export default function MainPage({offersAmount, offerCards}: MainPageProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeCard, setActiveCard] = useState<string>();
 
@@ -63,7 +63,7 @@ export default function MainPage({offersAmount, offersCards}: MainPageProps) {
         </div>
         <div className="cities">
           <div className="cities__places-container container">
-            <OffersList offersAmount={offersAmount} offersCards={offersCards} onOfferCardMouseEnter={onOfferCardMouseEnter}/>
+            <OffersList offersAmount={offersAmount} offerCards={offerCards} onOfferCardMouseEnter={onOfferCardMouseEnter}/>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
             </div>

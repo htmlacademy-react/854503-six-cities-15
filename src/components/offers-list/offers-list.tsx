@@ -3,15 +3,15 @@ import OfferCard from '../offer-card/offer-card';
 
 type OffersListProps = {
   offersAmount: number;
-  offersCards: OfferCardType[];
+  offerCards: OfferCardType[];
   onOfferCardMouseEnter: (cardId: string) => void;
 }
 
-function getOffers(offersCards: OfferCardType[], onOfferCardMouseEnter: (cardId: string) => void): JSX.Element[] {
-  return offersCards.map((offerCard) => <OfferCard onOfferCardMouseEnter={onOfferCardMouseEnter} offerCard={offerCard} key={offerCard.id} />);
+function getOffers(offerCards: OfferCardType[], onOfferCardMouseEnter: (cardId: string) => void): JSX.Element[] {
+  return offerCards.map((offerCard) => <OfferCard onOfferCardMouseEnter={onOfferCardMouseEnter} offerCard={offerCard} key={offerCard.id} />);
 }
 
-export default function OffersList({offersAmount, offersCards, onOfferCardMouseEnter}: OffersListProps): JSX.Element {
+export default function OffersList({offersAmount, offerCards, onOfferCardMouseEnter}: OffersListProps): JSX.Element {
 
   return (
     <section className="cities__places places">
@@ -33,7 +33,7 @@ export default function OffersList({offersAmount, offersCards, onOfferCardMouseE
         </ul>
       </form>
       <div className="cities__places-list places__list tabs__content">
-        {getOffers(offersCards, onOfferCardMouseEnter)}
+        {getOffers(offerCards, onOfferCardMouseEnter)}
       </div>
     </section>
   );
