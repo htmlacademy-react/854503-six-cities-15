@@ -2,20 +2,27 @@ import { Helmet } from 'react-helmet-async';
 import PageHeader from '../../components/page-header/page-header';
 import OffersList from '../../components/offers-list/offers-list';
 import { OfferCardType } from '../../types/offer';
+import { useState } from 'react';
 
 type MainPageProps = {
   offersAmount: number;
-  offersCards: OfferCardType[];
+  offerCards: OfferCardType[];
 }
 
-export default function MainPage({offersAmount, offersCards}: MainPageProps) {
+export default function MainPage({offersAmount, offerCards}: MainPageProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [activeCard, setActiveCard] = useState<string>();
+
+  function onOfferCardMouseEnter(cardId: string): void {
+    setActiveCard(cardId);
+  }
 
   return (
     <div className="page page--gray page--main">
       <Helmet>
         <title>6 cities. Main</title>
       </Helmet>
-      <PageHeader />
+      <PageHeader isPlain={false} />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
@@ -56,7 +63,7 @@ export default function MainPage({offersAmount, offersCards}: MainPageProps) {
         </div>
         <div className="cities">
           <div className="cities__places-container container">
-            <OffersList offersAmount={offersAmount} offersCards={offersCards} />
+            <OffersList offersAmount={offersAmount} offerCards={offerCards} onOfferCardMouseEnter={onOfferCardMouseEnter}/>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
             </div>

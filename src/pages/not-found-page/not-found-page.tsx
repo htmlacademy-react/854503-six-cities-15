@@ -9,7 +9,7 @@ export default function NotFoundPage() {
       <Helmet>
         <title>6 cities. 404 not found</title>
       </Helmet>
-      <PageHeader />
+      <PageHeader isPlain={false} />
       <main>
         <h1>404 Not Found</h1>
         <Link to={AppRoute.Root}>На главную</Link>

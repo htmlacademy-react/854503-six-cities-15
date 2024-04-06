@@ -8,13 +8,15 @@ import { PrivateRoute } from '../private-route/private-route';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import { HelmetProvider } from 'react-helmet-async';
 import { Offer, OfferCardType } from '../../types/offer';
+import OfferPage from '../../pages/offer-page/offer-page';
+import { OFFERS } from '../../mocks/offers';
 
 type AppComponentProps = {
-  offersCards: OfferCardType[];
+  offerCards: OfferCardType[];
   offers: Offer[];
 }
 
-export default function App({offersCards, offers}: AppComponentProps): JSX.Element {
+export default function App({offerCards, offers}: AppComponentProps): JSX.Element {
   const offersAmount = offers.length;
 
   return (
@@ -25,7 +27,7 @@ export default function App({offersCards, offers}: AppComponentProps): JSX.Eleme
           <Route path={AppRoute.Root}>
             <Route
               index
-              element={<MainPage offersAmount={offersAmount} offersCards={offersCards}/>}
+              element={<MainPage offersAmount={offersAmount} offerCards={offerCards}/>}
             />
             <Route
               path={AppRoute.Login}
@@ -34,14 +36,14 @@ export default function App({offersCards, offers}: AppComponentProps): JSX.Eleme
             <Route
               path={AppRoute.Favorites}
               element={
-                <PrivateRoute authStatus={AuthorizationStatus.NoAuth}>
-                  <FavoritesPage />
+                <PrivateRoute authStatus={AuthorizationStatus.Auth}>
+                  <FavoritesPage offerCards={offerCards}/>
                 </PrivateRoute>
               }
             />
             <Route
               path={`${AppRoute.Offer}/:id`}
-              element={<FavoritesPage />}
+              element={<OfferPage offers={OFFERS} />}
             />
           </Route>
           <Route
