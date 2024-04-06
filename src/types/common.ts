@@ -1,4 +1,4 @@
-import { Cities } from '../const';
+import { Cities, SORT_BY_VALUES } from '../const';
 import { OfferCardType } from './offer';
 
 export type SortedCards<T> = Partial<Record<keyof T, OfferCardType[]>>;
@@ -22,3 +22,5 @@ export type ImageSizeType = {
 }
 
 export type CitiesNames = keyof typeof Cities;
+
+export type SortingType = typeof SORT_BY_VALUES[number];

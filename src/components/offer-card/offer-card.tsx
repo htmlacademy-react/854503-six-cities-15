@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
-import { AppRoute, RATING_STEP } from '../../const';
+import { AppRoute } from '../../const';
 import { ImageSizeType, OfferCardType } from '../../types';
+import { getRatingWidth } from '../../common/utils';
 
 type OfferCardProps = {
   offerCard: OfferCardType;
@@ -61,7 +62,7 @@ export default function OfferCard(props: OfferCardProps): JSX.Element {
         </div>
         <div className='place-card__rating rating'>
           <div className='place-card__stars rating__stars'>
-            <span style={{width: `${RATING_STEP * offerCard.rating}%`}}></span>
+            <span style={{width: getRatingWidth(offerCard.rating)}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

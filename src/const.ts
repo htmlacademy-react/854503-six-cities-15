@@ -1,6 +1,6 @@
 import { CitiesNames, City } from './types';
 
-export const RATING_STEP = 20;
+export const RATING_WIDTH_STEP = 20;
 
 export enum AppRoute {
   Root = '/',
@@ -39,6 +39,13 @@ export enum Months {
   'November',
   'December'
 }
+
+export const SORT_BY_VALUES = [
+  'Popular',
+  'Price: low to high',
+  'Price: high to low',
+  'Top rated first',
+] as const;
 
 export const CITIES_LOCATION: Record<CitiesNames, City> = {
   Paris: {

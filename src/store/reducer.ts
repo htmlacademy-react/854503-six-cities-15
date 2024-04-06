@@ -8,7 +8,7 @@ import { CITIES_LOCATION, Cities } from '../const';
 type State = {
   city: City;
   offers: OfferCardType[];
-  currentCityOffers: OfferCardType[] | undefined;
+  currentCityOffers: OfferCardType[];
 }
 
 export const initialState: State = {
