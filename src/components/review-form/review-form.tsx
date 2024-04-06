@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
-import { postUserReviewAction } from '../../store/api-actions';
 import { UserReview } from '../../types';
+import { postUserReviewAction } from '../../store/reviews-process/reviews-process.thunks';
 
 const MIN_REVIEW_LENGTH = 50;
 const MAX_REVIEW_LENGTH = 300;

@@ -1,13 +1,14 @@
 import { Helmet } from 'react-helmet-async';
 import PageHeader from '../../components/page-header/page-header';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import { Link, Navigate } from 'react-router-dom';
 import { FormEvent, useRef } from 'react';
-import { loginAction } from '../../store/api-actions';
+import { loginAction } from '../../store/user-process/user-process.thunks';
+import { getAuthCheckedStatus } from '../../store/user-process/user-process.selectors';
 
 export default function LoginPage(): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isAuth = useAppSelector(getAuthCheckedStatus);
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
@@ -24,7 +25,7 @@ export default function LoginPage(): JSX.Element {
   }
 
   return (
-    authorizationStatus === AuthorizationStatus.Auth ?
+    isAuth ?
       <Navigate to={AppRoute.Root} /> :
       <div className="page page--gray page--login">
         <Helmet>

@@ -1,22 +1,22 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import PageHeader from '../../components/page-header/page-header';
 import { City, Offer, OfferCardType } from '../../types';
 import NotFoundPage from '../not-found-page/not-found-page';
-import ReviewForm from '../../components/review-form/review-form';
-import ReviewsList from '../../components/reviews-list/reviews-list';
-import { ReviewType } from '../../types';
 import { RenderMapFunctionType } from '../../types';
 import OffersList from '../../components/offers-list/offers-list';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import { getRatingWidth } from '../../common/utils';
-import { AppRoute, AuthorizationStatus } from '../../const';
-import { MouseEvent, useEffect } from 'react';
-import { fetchNearbyOffersAction, fetchOfferDataAction, fetchReviewsAction } from '../../store/api-actions';
+import { AppRoute } from '../../const';
+import { MouseEvent } from 'react';
 import OfferImage from './components/offer-image';
 import OfferGoods from './components/offer-goods';
 import OfferFeatures from './components/offer-features';
 import OfferHost from './components/offer-host';
+import { getCurrentCity } from '../../store/city/city.selectors';
+import { getAuthCheckedStatus } from '../../store/user-process/user-process.selectors';
+import { getDetailedOffer, getNearbyOffers } from '../../store/offers-process/offers-process.selectors';
+import Reviews from '../../components/reviews/reviews';
 
 const MAP_CLASS = 'offer__map';
 const OFFER_BLOCK_CLASS = 'near-places';
@@ -26,26 +26,12 @@ type OfferPageProps = {
 }
 
 export default function OfferPage({renderMap}: OfferPageProps): JSX.Element {
-  const {id: offerId} = useParams();
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
-  const isAuth = useAppSelector((state) => state.authorizationStatus) === AuthorizationStatus.Auth;
-  const offerData: Offer | null = useAppSelector((state) => state.detailedOffer);
-  const reviews: ReviewType[] = useAppSelector((state) => state.reviews);
-  const nearbyOffers: OfferCardType[] = useAppSelector((state) => state.nearbyOffers);
-  const city: City = useAppSelector((state) => state.city);
-
-  useEffect(() => {
-    if (!offerId) {
-      return;
-    }
-
-    dispatch(fetchOfferDataAction(offerId));
-    dispatch(fetchReviewsAction(offerId));
-    dispatch(fetchNearbyOffersAction(offerId));
-
-  }, [offerId, dispatch]);
+  const isAuth = useAppSelector(getAuthCheckedStatus);
+  const offerData: Offer | null = useAppSelector(getDetailedOffer);
+  const nearbyOffers: OfferCardType[] = useAppSelector(getNearbyOffers);
+  const city: City = useAppSelector(getCurrentCity);
 
   function handleBookmarkClick(evt: MouseEvent<HTMLButtonElement>) {
     evt.preventDefault();
@@ -121,13 +107,7 @@ export default function OfferPage({renderMap}: OfferPageProps): JSX.Element {
                   </p>
                 </div>
               </div>
-              <section className="offer__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                <ReviewsList reviews={reviews}/>
-                {
-                  isAuth && <ReviewForm offerId={offerData.id}/>
-                }
-              </section>
+              <Reviews offerId={offerData.id} />
             </div>
           </div>
           {renderMap(city, nearbyOffers.slice(0, 3), offerData, MAP_CLASS)}

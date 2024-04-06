@@ -2,8 +2,9 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { ImageSizeType, OfferCardType } from '../../types';
 import { getRatingWidth } from '../../common/utils';
-import { fetchOfferDataAction } from '../../store/api-actions';
 import { useAppDispatch } from '../../hooks';
+import { fetchNearbyOffersAction, fetchOfferDataAction } from '../../store/offers-process/offers-process.thunks';
+import { fetchReviewsAction } from '../../store/reviews-process/reviews-process.thunks';
 
 type OfferCardProps = {
   offerCard: OfferCardType;
@@ -29,6 +30,8 @@ export default function OfferCard(props: OfferCardProps): JSX.Element {
 
   function handleOfferCardClick(): void {
     dispatch(fetchOfferDataAction(offerCard.id));
+    dispatch(fetchReviewsAction(offerCard.id));
+    dispatch(fetchNearbyOffersAction(offerCard.id));
   }
 
   return (

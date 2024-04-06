@@ -1,12 +1,13 @@
 import { MouseEvent } from 'react';
 import { CITIES_LOCATION } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeCity } from '../../store/actions';
+import { changeCity } from '../../store/city/city.slice';
 import { CitiesNames, City } from '../../types';
+import { getCurrentCity } from '../../store/city/city.selectors';
 
 export default function LocationsList(): JSX.Element {
   const locations = Object.keys(CITIES_LOCATION);
-  const currentCity: City = useAppSelector((state) => state.city);
+  const currentCity: City = useAppSelector(getCurrentCity);
   const dispatch = useAppDispatch();
 
   const onLocationClick = (evt: MouseEvent<HTMLElement>, location: string) => {

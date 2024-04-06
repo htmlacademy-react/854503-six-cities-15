@@ -105,3 +105,10 @@ export enum Endpoints {
   Login = '/login',
   Logout = '/logout'
 }
+
+export enum NameSpace {
+  CityData = 'CITY',
+  Offers = 'OFFERS',
+  User = 'USER',
+  Reviews = 'REVIEWS'
+}

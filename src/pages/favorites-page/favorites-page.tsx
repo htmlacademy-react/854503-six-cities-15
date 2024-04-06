@@ -4,9 +4,10 @@ import FavoritesList from '../../components/favofites-list/favorites-list';
 import { useAppSelector } from '../../hooks';
 import { OfferCardType } from '../../types';
 import { sortOffersByCity } from '../../common/utils';
+import { getOffers } from '../../store/offers-process/offers-process.selectors';
 
 export default function FavoritesPage(): JSX.Element {
-  const offers: OfferCardType[] = useAppSelector((state) => state.offers);
+  const offers: OfferCardType[] = useAppSelector(getOffers);
 
   return (
     <div className="page">
@@ -18,7 +19,7 @@ export default function FavoritesPage(): JSX.Element {
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-            <FavoritesList cardsSortedByCity={sortOffersByCity(offers)} />
+            <FavoritesList offersSortedByCity={sortOffersByCity(offers)} />
           </section>
         </div>
       </main>
