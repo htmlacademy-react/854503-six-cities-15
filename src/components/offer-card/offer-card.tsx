@@ -4,13 +4,13 @@ import { OfferCardType } from '../../types/offer';
 
 type OfferCardProps = {
   offerCard: OfferCardType;
-  onOfferCardMouseEnter: (cardId: string) => void;
+  onOfferCardMouseEnter: (card: OfferCardType) => void;
 }
 
 export default function OfferCard({offerCard, onOfferCardMouseEnter}: OfferCardProps): JSX.Element {
   return (
     <article
-      onMouseEnter={() => onOfferCardMouseEnter(offerCard.id)}
+      onMouseEnter={() => onOfferCardMouseEnter(offerCard)}
       className="cities__card place-card"
     >
       {

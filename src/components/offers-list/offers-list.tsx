@@ -4,10 +4,10 @@ import OfferCard from '../offer-card/offer-card';
 type OffersListProps = {
   offersAmount: number;
   offerCards: OfferCardType[];
-  onOfferCardMouseEnter: (cardId: string) => void;
+  onOfferCardMouseEnter: (card: OfferCardType) => void;
 }
 
-function getOffers(offerCards: OfferCardType[], onOfferCardMouseEnter: (cardId: string) => void): JSX.Element[] {
+function getOffers(offerCards: OfferCardType[], onOfferCardMouseEnter: (card: OfferCardType) => void): JSX.Element[] {
   return offerCards.map((offerCard) => (
     <OfferCard
       onOfferCardMouseEnter={onOfferCardMouseEnter}

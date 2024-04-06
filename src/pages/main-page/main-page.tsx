@@ -11,10 +11,11 @@ type MainPageProps = {
 }
 
 export default function MainPage({offersAmount, offerCards}: MainPageProps) {
-  const [activeCardId, setActiveCardId] = useState<string | null>(null);
+  const [activeCard, setActiveCard] = useState<OfferCardType | null>(null);
+  const defaultCityLocation = offerCards[0].city.location;
 
-  function onOfferCardMouseEnter(cardId: string): void {
-    setActiveCardId(cardId);
+  function onOfferCardMouseEnter(card: OfferCardType): void {
+    setActiveCard(card);
   }
 
   return (
@@ -69,7 +70,11 @@ export default function MainPage({offersAmount, offerCards}: MainPageProps) {
               onOfferCardMouseEnter={onOfferCardMouseEnter}
             />
             <div className="cities__right-section">
-              <Map activeCardId={activeCardId} offerCards={offerCards}/>
+              <Map
+                cityLocation={defaultCityLocation}
+                points={offerCards}
+                activePoint={activeCard}
+              />
             </div>
           </div>
         </div>
