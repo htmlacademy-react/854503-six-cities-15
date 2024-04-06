@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import PageHeader from '../../components/page-header/page-header';
-import { Offer, OfferCardType } from '../../types';
+import { City, Offer, OfferCardType } from '../../types';
 import NotFoundPage from '../not-found-page/not-found-page';
 import ReviewForm from '../../components/review-form/review-form';
 import ReviewsList from '../../components/reviews-list/reviews-list';
@@ -34,6 +34,7 @@ export default function OfferPage({renderMap}: OfferPageProps): JSX.Element {
   const offerData: Offer | null = useAppSelector((state) => state.detailedOffer);
   const reviews: ReviewType[] = useAppSelector((state) => state.reviews);
   const nearbyOffers: OfferCardType[] = useAppSelector((state) => state.nearbyOffers);
+  const city: City = useAppSelector((state) => state.city);
 
   useEffect(() => {
     if (!offerId) {
@@ -129,13 +130,13 @@ export default function OfferPage({renderMap}: OfferPageProps): JSX.Element {
               </section>
             </div>
           </div>
-          {/* {renderMap(offerCards[0].city, offerCards[0], MAP_CLASS)} */}
+          {renderMap(city, nearbyOffers.slice(0, 3), offerData, MAP_CLASS)}
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <OffersList
-              offerCards={nearbyOffers}
+              offerCards={nearbyOffers.slice(0, 3)}
               blockClass={OFFER_BLOCK_CLASS}
               onOfferCardMouseEnter={() => null}
               onOfferCardMouseLeave={() => null}

@@ -1,14 +1,15 @@
 import { useEffect, useRef } from 'react';
-import { City, OfferCardType } from '../../types';
+import { City, Offer, OfferCardType } from '../../types';
 import useMap from './use-map';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from './const';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { useAppSelector } from '../../hooks';
+import { ActivePoint } from '../../types/map';
 
 type MapProps = {
   city: City;
-  activePoint: OfferCardType | null;
+  offers: OfferCardType[];
+  activePoint: ActivePoint;
   containerClass: string;
 }
 
@@ -24,10 +25,23 @@ const currentCustomIcon = leaflet.icon({
   iconAnchor: [20, 40],
 });
 
-export default function Map({city, activePoint, containerClass}: MapProps): JSX.Element {
+export default function Map({
+  city,
+  offers,
+  activePoint,
+  containerClass,
+}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap({mapRef, city});
-  const pointsByCity = useAppSelector((state) => state.currentCityOffers);
+  let activeCardId: string | undefined | null;
+  let currentOffers: (OfferCardType | Offer | null)[] = offers;
+
+  if (typeof activePoint === 'object' && activePoint !== null) {
+    activeCardId = activePoint.id;
+    currentOffers = currentOffers.slice().concat([activePoint]);
+  } else {
+    activeCardId = activePoint;
+  }
 
   useEffect(() => {
     if (map) {
@@ -35,20 +49,20 @@ export default function Map({city, activePoint, containerClass}: MapProps): JSX.
         [city.location.latitude, city.location.longitude],
         city.location.zoom
       );
-      pointsByCity?.forEach((card) => {
+      currentOffers.forEach((card) => {
         leaflet
           .marker({
-            lat: card.location.latitude,
-            lng: card.location.longitude,
+            lat: card!.location.latitude,
+            lng: card!.location.longitude,
           }, {
-            icon: card.id === activePoint?.id ?
+            icon: card!.id === activeCardId ?
               currentCustomIcon :
               defaultCustomIcon
           })
           .addTo(map);
       });
     }
-  }, [map, pointsByCity, city, activePoint]);
+  }, [map, currentOffers, city, activeCardId]);
 
   return (
     <section ref={mapRef} className={`${containerClass} map`}></section>

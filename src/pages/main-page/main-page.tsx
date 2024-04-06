@@ -26,7 +26,7 @@ export default function MainPage({renderMap}: MainPageProps) {
   const offers: OfferCardType[] = useAppSelector((state) => state.offers);
   const currentOffers: OfferCardType[] = sortOffersByCity(offers)[currentCity.name as Cities];
 
-  const offersAmount = currentOffers?.length || 0;
+  const offersAmount = currentOffers.length || 0;
 
   function handleOfferCardMouseEnter(card: OfferCardType): void {
     setActiveCard(card);
@@ -71,7 +71,7 @@ export default function MainPage({renderMap}: MainPageProps) {
                   />
                 </section>
                 <div className="cities__right-section">
-                  {renderMap(currentCity, activeCard, MAP_CLASS)}
+                  {renderMap(currentCity, currentOffers, activeCard?.id, MAP_CLASS)}
                 </div>
               </div>
             </div>
