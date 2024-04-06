@@ -4,15 +4,17 @@ import OffersList from '../../components/offers-list/offers-list';
 import { OfferCardType } from '../../types/offer';
 import { useState } from 'react';
 import Map from '../../components/map/map';
+import { LocationType } from '../../types/common';
+import { MAIN_PAGE_MAP_CLASS } from '../../const';
 
 type MainPageProps = {
   offersAmount: number;
   offerCards: OfferCardType[];
+  defaultCityLocation: LocationType;
 }
 
-export default function MainPage({offersAmount, offerCards}: MainPageProps) {
+export default function MainPage({offersAmount, offerCards, defaultCityLocation}: MainPageProps) {
   const [activeCard, setActiveCard] = useState<OfferCardType | null>(null);
-  const defaultCityLocation = offerCards[0].city.location;
 
   function onOfferCardMouseEnter(card: OfferCardType): void {
     setActiveCard(card);
@@ -74,6 +76,7 @@ export default function MainPage({offersAmount, offerCards}: MainPageProps) {
                 cityLocation={defaultCityLocation}
                 points={offerCards}
                 activePoint={activeCard}
+                containerClass={MAIN_PAGE_MAP_CLASS}
               />
             </div>
           </div>

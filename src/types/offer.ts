@@ -56,3 +56,5 @@ export type OfferCardType = {
   rating: number;
   previewImage: string;
 }
+
+export type OfferLikeType = Offer | OfferCardType;

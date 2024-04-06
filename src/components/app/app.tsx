@@ -11,6 +11,7 @@ import { Offer, OfferCardType } from '../../types/offer';
 import OfferPage from '../../pages/offer-page/offer-page';
 import { sortOffersByCity } from '../../common/utils';
 import { ReviewType } from '../../types/review';
+import withMap from '../../hocs/with-map/with-map';
 
 type AppComponentProps = {
   offerCards: OfferCardType[];
@@ -18,9 +19,13 @@ type AppComponentProps = {
   reviews: ReviewType[];
 }
 
+const OfferPageWrapped = withMap(OfferPage);
+const MainPageWrapped = withMap(MainPage);
+
 export default function App({offerCards, offers, reviews}: AppComponentProps): JSX.Element {
   const offersAmount = offers.length;
   const cardsSortedByCity = sortOffersByCity(offerCards);
+  const defaultCityLocation = offerCards[0].city.location;
 
   return (
     <HelmetProvider>
@@ -30,7 +35,13 @@ export default function App({offerCards, offers, reviews}: AppComponentProps): J
           <Route path={AppRoute.Root}>
             <Route
               index
-              element={<MainPage offersAmount={offersAmount} offerCards={offerCards}/>}
+              element={
+                <MainPageWrapped
+                  offersAmount={offersAmount}
+                  offerCards={offerCards}
+                  defaultCityLocation={defaultCityLocation}
+                />
+              }
             />
             <Route
               path={AppRoute.Login}
@@ -46,7 +57,13 @@ export default function App({offerCards, offers, reviews}: AppComponentProps): J
             />
             <Route
               path={`${AppRoute.Offer}/:id`}
-              element={<OfferPage offers={offers} reviews={reviews}/>}
+              element={
+                <OfferPageWrapped
+                  city={defaultCityLocation}
+                  offers={offers}
+                  reviews={reviews}
+                />
+              }
             />
           </Route>
           <Route

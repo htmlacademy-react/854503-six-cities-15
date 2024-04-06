@@ -1,18 +1,24 @@
 import { Helmet } from 'react-helmet-async';
 import PageHeader from '../../components/page-header/page-header';
-import { Offer } from '../../types/offer';
+import { Offer, OfferCardType } from '../../types/offer';
 import { useParams } from 'react-router-dom';
 import NotFoundPage from '../not-found-page/not-found-page';
 import ReviewForm from '../../components/review-form/review-form';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import { ReviewType } from '../../types/review';
+import { LocationType } from '../../types/common';
+import { OFFER_PAGE_MAP_CLASS } from '../../const';
+import { RenderMapFunctionType } from '../../types';
 
 type OfferPageProps = {
-  offers: Offer[];
+  city: LocationType;
+  offers: Offer[] | OfferCardType[];
   reviews: ReviewType[];
+  renderMap: RenderMapFunctionType;
 }
 
-export default function OfferPage({offers, reviews}: OfferPageProps): JSX.Element {
+export default function OfferPage(props: OfferPageProps): JSX.Element {
+  const {city, offers, reviews, renderMap} = props;
   const params = useParams();
   const currentOffer = offers.find((offer) => offer.id === params.id);
 
@@ -148,7 +154,7 @@ export default function OfferPage({offers, reviews}: OfferPageProps): JSX.Elemen
               </section>
             </div>
           </div>
-          <section className="offer__map map"></section>
+          {renderMap(city, offers, null, OFFER_PAGE_MAP_CLASS)}
         </section>
         <div className="container">
           <section className="near-places places">

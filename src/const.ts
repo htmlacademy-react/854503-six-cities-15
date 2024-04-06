@@ -1,4 +1,6 @@
 export const RATING_STEP = 20;
+export const MAIN_PAGE_MAP_CLASS = 'cities__map';
+export const OFFER_PAGE_MAP_CLASS = 'offer__map';
 
 export enum AppRoute {
   Root = '/',
