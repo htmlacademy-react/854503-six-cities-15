@@ -5,12 +5,10 @@ type FavoritesListProps = {
   offerCards: OfferCardType[];
 }
 
-type a = {
-  [index: string]: OfferCardType[];
-};
+type proccessedOffersType = Record<string, OfferCardType[]>;
 
-function sortFavoritesByCity(offerCards: OfferCardType[]): a {
-  const proccessedOffers: a = {};
+function sortFavoritesByCity(offerCards: OfferCardType[]): proccessedOffersType {
+  const proccessedOffers: proccessedOffersType = {};
 
   offerCards.forEach((offer: OfferCardType) => {
     if (!proccessedOffers[offer.city.name]) {
@@ -24,7 +22,7 @@ function sortFavoritesByCity(offerCards: OfferCardType[]): a {
 }
 
 function createFavoriteList(offerCards: OfferCardType[]): JSX.Element[] {
-  const sortedOffersByCity: a = sortFavoritesByCity(offerCards);
+  const sortedOffersByCity: proccessedOffersType = sortFavoritesByCity(offerCards);
   const favoriteItems: JSX.Element[] = [];
 
   Object.keys(sortedOffersByCity).forEach((city) => {
