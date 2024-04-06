@@ -1,7 +1,7 @@
 import { ComponentType } from 'react';
 import Map from '../../components/map/map';
-import { LocationType } from '../../types/common';
-import { OfferLikeType } from '../../types/offer';
+import { LocationType } from '../../types';
+import { OfferLikeType } from '../../types';
 import { RenderMapFunctionType } from './types';
 
 type HOCProps = {

@@ -1,5 +1,5 @@
 import { Months, RATING_STEP } from '../../const';
-import { ReviewType } from '../../types/review';
+import { ReviewType } from '../../types';
 
 type ReviewItemProps = {
   review: ReviewType;

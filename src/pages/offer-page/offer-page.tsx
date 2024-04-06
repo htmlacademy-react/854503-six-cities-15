@@ -1,12 +1,12 @@
+import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import PageHeader from '../../components/page-header/page-header';
-import { Offer, OfferCardType } from '../../types/offer';
-import { useParams } from 'react-router-dom';
+import { Offer, OfferCardType } from '../../types';
 import NotFoundPage from '../not-found-page/not-found-page';
 import ReviewForm from '../../components/review-form/review-form';
 import ReviewsList from '../../components/reviews-list/reviews-list';
-import { ReviewType } from '../../types/review';
-import { LocationType } from '../../types/common';
+import { ReviewType } from '../../types';
+import { LocationType } from '../../types';
 import { OFFER_PAGE_MAP_CLASS } from '../../const';
 import { RenderMapFunctionType } from '../../types';
 

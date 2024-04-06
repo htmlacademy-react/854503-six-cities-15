@@ -1,5 +1,5 @@
-import { LocationType } from '../../types/common';
-import { OfferLikeType } from '../../types/offer';
+import { LocationType } from '../../types/index';
+import { OfferLikeType } from '../../types/index';
 
 export type RenderMapFunctionType = (
   cityLocation: LocationType,

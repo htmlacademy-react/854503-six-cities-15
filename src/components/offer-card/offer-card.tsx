@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, RATING_STEP } from '../../const';
-import { OfferCardType } from '../../types/offer';
+import { OfferCardType } from '../../types';
 
 type OfferCardProps = {
   offerCard: OfferCardType;

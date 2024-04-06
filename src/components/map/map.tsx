@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
-import { OfferLikeType } from '../../types/offer';
+import { OfferLikeType } from '../../types';
 import useMap from './use-map';
-import { LocationType } from '../../types/common';
+import { LocationType } from '../../types';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from './const';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';

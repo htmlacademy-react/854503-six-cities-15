@@ -1,5 +1,5 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
-import { LocationType } from '../../types/common';
+import { LocationType } from '../../types/index';
 import { Map, TileLayer } from 'leaflet';
 
 type UseMapProps = {

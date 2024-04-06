@@ -7,10 +7,10 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import { PrivateRoute } from '../private-route/private-route';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import { HelmetProvider } from 'react-helmet-async';
-import { Offer, OfferCardType } from '../../types/offer';
+import { Offer, OfferCardType } from '../../types';
 import OfferPage from '../../pages/offer-page/offer-page';
 import { sortOffersByCity } from '../../common/utils';
-import { ReviewType } from '../../types/review';
+import { ReviewType } from '../../types';
 import withMap from '../../hocs/with-map/with-map';
 
 type AppComponentProps = {

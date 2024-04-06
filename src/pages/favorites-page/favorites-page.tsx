@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import PageHeader from '../../components/page-header/page-header';
 import FavoritesList from '../../components/favofites-list/favorites-list';
 import { Cities } from '../../const';
-import { SortedCards } from '../../types/common';
+import { SortedCards } from '../../types';
 
 type FavoritesPageProps = {
   cardsSortedByCity: SortedCards<typeof Cities>;

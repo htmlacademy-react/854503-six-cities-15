@@ -1,10 +1,10 @@
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import PageHeader from '../../components/page-header/page-header';
 import OffersList from '../../components/offers-list/offers-list';
-import { OfferCardType } from '../../types/offer';
-import { useState } from 'react';
+import { OfferCardType } from '../../types';
 import Map from '../../components/map/map';
-import { LocationType } from '../../types/common';
+import { LocationType } from '../../types';
 import { MAIN_PAGE_MAP_CLASS } from '../../const';
 
 type MainPageProps = {
