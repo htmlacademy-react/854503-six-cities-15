@@ -1,8 +1,10 @@
 import { createAction } from '@reduxjs/toolkit';
 import { City, OfferCardType, UserData } from '../types';
-import { AuthorizationStatus } from '../const';
+import { AppRoute, AuthorizationStatus } from '../const';
 
-export const changeCity = createAction('city/changeCity', (city: City) => ({payload: city}));
+export const changeCity = createAction('app/changeCity', (city: City) => ({payload: city}));
+
+export const redirectToRoute = createAction<AppRoute>('app/redirectToRoute');
 
 export const fillOffers = createAction('offers/fillOffers');
 
