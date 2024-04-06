@@ -11,7 +11,14 @@ export type LocationType = {
   zoom: number;
 }
 
+export type City = {
+  name: string;
+  location: LocationType;
+}
+
 export type ImageSizeType = {
   width: number;
   height: number;
 }
+
+export type CitiesNames = keyof typeof Cities;

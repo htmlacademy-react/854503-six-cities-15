@@ -1,8 +1,7 @@
-import { LocationType, OfferCardType } from '../../types/index';
+import { City, OfferCardType } from '../../types/index';
 
 export type RenderMapFunctionType = (
-  cityLocation: LocationType,
-  points: OfferCardType[],
+  city: City,
   activePoint: OfferCardType | null,
-  containerClass: string
+  containerClass: string | null
 ) => JSX.Element;

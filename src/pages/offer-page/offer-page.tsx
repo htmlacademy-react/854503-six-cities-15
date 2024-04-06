@@ -6,24 +6,23 @@ import NotFoundPage from '../not-found-page/not-found-page';
 import ReviewForm from '../../components/review-form/review-form';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import { ReviewType } from '../../types';
-import { LocationType } from '../../types';
 import { RenderMapFunctionType } from '../../types';
 import OffersList from '../../components/offers-list/offers-list';
+import { useAppSelector } from '../../hooks';
 
 const MAP_CLASS = 'offer__map';
 const OFFER_BLOCK_CLASS = 'near-places';
 
 type OfferPageProps = {
-  city: LocationType;
-  offers: Offer[] | OfferCardType[];
-  offerCards: OfferCardType[];
+  offers: Offer[];
   reviews: ReviewType[];
   renderMap: RenderMapFunctionType;
 }
 
 export default function OfferPage(props: OfferPageProps): JSX.Element {
-  const {city, offers, offerCards, reviews, renderMap} = props;
+  const {offers, reviews, renderMap} = props;
   const params = useParams();
+  const offerCards: OfferCardType[] = useAppSelector((state) => state.offers);
   const currentOffer = offers.find((offer) => offer.id === params.id);
 
   return currentOffer ? (
@@ -158,15 +157,16 @@ export default function OfferPage(props: OfferPageProps): JSX.Element {
               </section>
             </div>
           </div>
-          {renderMap(city, offerCards, null, MAP_CLASS)}
+          {renderMap(offerCards[0].city, offerCards[0], MAP_CLASS)}
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <OffersList
-              offerCards={offerCards}
+              offerCards={offerCards.slice(0, 3)}
               blockClass={OFFER_BLOCK_CLASS}
               onOfferCardMouseEnter={() => null}
+              onOfferCardMouseLeave={() => null}
             />
           </section>
         </div>

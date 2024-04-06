@@ -1,14 +1,13 @@
 import { useEffect, useRef } from 'react';
-import { OfferCardType } from '../../types';
+import { City, OfferCardType } from '../../types';
 import useMap from './use-map';
-import { LocationType } from '../../types';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from './const';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { useAppSelector } from '../../hooks';
 
 type MapProps = {
-  cityLocation: LocationType;
-  points: OfferCardType[];
+  city: City;
   activePoint: OfferCardType | null;
   containerClass: string;
 }
@@ -25,14 +24,18 @@ const currentCustomIcon = leaflet.icon({
   iconAnchor: [20, 40],
 });
 
-export default function Map({cityLocation, points, activePoint, containerClass}: MapProps): JSX.Element {
+export default function Map({city, activePoint, containerClass}: MapProps): JSX.Element {
   const mapRef = useRef(null);
-  const map = useMap({mapRef, cityLocation});
-
+  const map = useMap({mapRef, city});
+  const pointsByCity = useAppSelector((state) => state.currentCityOffers);
 
   useEffect(() => {
     if (map) {
-      points.forEach((card) => {
+      map.setView(
+        [city.location.latitude, city.location.longitude],
+        city.location.zoom
+      );
+      pointsByCity?.forEach((card) => {
         leaflet
           .marker({
             lat: card.location.latitude,
@@ -45,7 +48,7 @@ export default function Map({cityLocation, points, activePoint, containerClass}:
           .addTo(map);
       });
     }
-  }, [map, cityLocation, points, activePoint]);
+  }, [map, pointsByCity, city, activePoint]);
 
   return (
     <section ref={mapRef} className={`${containerClass} map`}></section>
