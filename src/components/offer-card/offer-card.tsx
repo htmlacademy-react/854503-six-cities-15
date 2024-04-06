@@ -46,7 +46,7 @@ export default function OfferCard({offerCard, onOfferCardMouseEnter}: OfferCardP
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${RATING_STEP * offerCard.rating}px`}}></span>
+            <span style={{width: `${RATING_STEP * offerCard.rating}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

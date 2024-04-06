@@ -1,5 +1,4 @@
-export const OFFERS_AMOUNT = 5;
-export const RATING_STEP = 15;
+export const RATING_STEP = 20;
 
 export enum AppRoute {
   Root = '/',
@@ -22,4 +21,19 @@ export enum Cities {
   Amsterdam = 'Amsterdam',
   Hamburg = 'Hamburg',
   Dusseldorf = 'Dusseldorf',
+}
+
+export enum Months {
+  'January' = 1,
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
 }

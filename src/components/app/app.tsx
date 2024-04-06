@@ -9,15 +9,16 @@ import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import { HelmetProvider } from 'react-helmet-async';
 import { Offer, OfferCardType } from '../../types/offer';
 import OfferPage from '../../pages/offer-page/offer-page';
-import { OFFERS } from '../../mocks/offers';
 import { sortOffersByCity } from '../../common/utils';
+import { ReviewType } from '../../types/review';
 
 type AppComponentProps = {
   offerCards: OfferCardType[];
   offers: Offer[];
+  reviews: ReviewType[];
 }
 
-export default function App({offerCards, offers}: AppComponentProps): JSX.Element {
+export default function App({offerCards, offers, reviews}: AppComponentProps): JSX.Element {
   const offersAmount = offers.length;
   const cardsSortedByCity = sortOffersByCity(offerCards);
 
@@ -45,7 +46,7 @@ export default function App({offerCards, offers}: AppComponentProps): JSX.Elemen
             />
             <Route
               path={`${AppRoute.Offer}/:id`}
-              element={<OfferPage offers={OFFERS} />}
+              element={<OfferPage offers={offers} reviews={reviews}/>}
             />
           </Route>
           <Route
