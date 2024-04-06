@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import { OFFERS, OFFER_CARDS } from './mocks/offers';
-import { REVIEWS } from './mocks/reviews';
-
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -11,6 +9,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App offerCards={OFFER_CARDS} offers={OFFERS} reviews={REVIEWS} />
+    <App offerCards={OFFER_CARDS} offers={OFFERS} />
   </React.StrictMode>
 );

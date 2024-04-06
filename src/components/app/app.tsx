@@ -10,6 +10,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Offer, OfferCardType } from '../../types/offer';
 import OfferPage from '../../pages/offer-page/offer-page';
 import { OFFERS } from '../../mocks/offers';
+import { sortOffersByCity } from '../../common/utils';
 
 type AppComponentProps = {
   offerCards: OfferCardType[];
@@ -18,6 +19,7 @@ type AppComponentProps = {
 
 export default function App({offerCards, offers}: AppComponentProps): JSX.Element {
   const offersAmount = offers.length;
+  const cardsSortedByCity = sortOffersByCity(offerCards);
 
   return (
     <HelmetProvider>
@@ -37,7 +39,7 @@ export default function App({offerCards, offers}: AppComponentProps): JSX.Elemen
               path={AppRoute.Favorites}
               element={
                 <PrivateRoute authStatus={AuthorizationStatus.Auth}>
-                  <FavoritesPage offerCards={offerCards}/>
+                  <FavoritesPage cardsSortedByCity={cardsSortedByCity}/>
                 </PrivateRoute>
               }
             />

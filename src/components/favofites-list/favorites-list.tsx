@@ -1,31 +1,16 @@
+import { Cities } from '../../const';
+import { SortedCardsByCityType } from '../../types/common';
 import { OfferCardType } from '../../types/offer';
 import FavoriteCard from '../favorite-card/favorite-card';
 
 type FavoritesListProps = {
-  offerCards: OfferCardType[];
+  cardsSortedByCity: SortedCardsByCityType;
 }
 
-type proccessedOffersType = Record<string, OfferCardType[]>;
-
-function sortFavoritesByCity(offerCards: OfferCardType[]): proccessedOffersType {
-  const proccessedOffers: proccessedOffersType = {};
-
-  offerCards.forEach((offer: OfferCardType) => {
-    if (!proccessedOffers[offer.city.name]) {
-      proccessedOffers[offer.city.name] = [offer];
-    } else {
-      proccessedOffers[offer.city.name].push(offer);
-    }
-  });
-
-  return proccessedOffers;
-}
-
-function createFavoriteList(offerCards: OfferCardType[]): JSX.Element[] {
-  const sortedOffersByCity: proccessedOffersType = sortFavoritesByCity(offerCards);
+function createFavoriteList(cardsSortedByCity: SortedCardsByCityType): JSX.Element[] {
   const favoriteItems: JSX.Element[] = [];
 
-  Object.keys(sortedOffersByCity).forEach((city) => {
+  Object.keys(cardsSortedByCity).forEach((city) => {
     const item = (
       <li
         className="favorites__locations-items"
@@ -39,7 +24,7 @@ function createFavoriteList(offerCards: OfferCardType[]): JSX.Element[] {
           </div>
         </div>
         <div className="favorites__places">
-          {sortedOffersByCity[city].map((offer) => <FavoriteCard offerCard={offer} key={offer.id} />)}
+          {(cardsSortedByCity[city as keyof typeof Cities] as Array<OfferCardType>).map((offer) => <FavoriteCard offerCard={offer} key={offer.id} />)}
         </div>
       </li>
     );
@@ -50,10 +35,10 @@ function createFavoriteList(offerCards: OfferCardType[]): JSX.Element[] {
   return favoriteItems;
 }
 
-export default function FavoritesList({offerCards}: FavoritesListProps): JSX.Element {
+export default function FavoritesList({cardsSortedByCity}: FavoritesListProps): JSX.Element {
   return (
     <ul className="favorites__list">
-      { createFavoriteList(offerCards) }
+      { createFavoriteList(cardsSortedByCity) }
     </ul>
   );
 }

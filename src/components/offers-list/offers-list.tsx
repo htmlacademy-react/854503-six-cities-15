@@ -8,7 +8,13 @@ type OffersListProps = {
 }
 
 function getOffers(offerCards: OfferCardType[], onOfferCardMouseEnter: (cardId: string) => void): JSX.Element[] {
-  return offerCards.map((offerCard) => <OfferCard onOfferCardMouseEnter={onOfferCardMouseEnter} offerCard={offerCard} key={offerCard.id} />);
+  return offerCards.map((offerCard) => (
+    <OfferCard
+      onOfferCardMouseEnter={onOfferCardMouseEnter}
+      offerCard={offerCard}
+      key={offerCard.id}
+    />
+  ));
 }
 
 export default function OffersList({offersAmount, offerCards, onOfferCardMouseEnter}: OffersListProps): JSX.Element {

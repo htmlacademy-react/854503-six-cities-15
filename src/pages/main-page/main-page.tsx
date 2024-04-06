@@ -3,6 +3,7 @@ import PageHeader from '../../components/page-header/page-header';
 import OffersList from '../../components/offers-list/offers-list';
 import { OfferCardType } from '../../types/offer';
 import { useState } from 'react';
+import Map from '../../components/map/map';
 
 type MainPageProps = {
   offersAmount: number;
@@ -10,11 +11,10 @@ type MainPageProps = {
 }
 
 export default function MainPage({offersAmount, offerCards}: MainPageProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [activeCard, setActiveCard] = useState<string>();
+  const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
   function onOfferCardMouseEnter(cardId: string): void {
-    setActiveCard(cardId);
+    setActiveCardId(cardId);
   }
 
   return (
@@ -63,9 +63,13 @@ export default function MainPage({offersAmount, offerCards}: MainPageProps) {
         </div>
         <div className="cities">
           <div className="cities__places-container container">
-            <OffersList offersAmount={offersAmount} offerCards={offerCards} onOfferCardMouseEnter={onOfferCardMouseEnter}/>
+            <OffersList
+              offersAmount={offersAmount}
+              offerCards={offerCards}
+              onOfferCardMouseEnter={onOfferCardMouseEnter}
+            />
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map activeCardId={activeCardId} offerCards={offerCards}/>
             </div>
           </div>
         </div>

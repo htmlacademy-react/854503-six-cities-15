@@ -17,7 +17,7 @@ export default function FavoriteCard({offerCard}: FavoriteCardProps): JSX.Elemen
           ''
       }
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <Link to={`${AppRoute.Offer}/${offerCard.id}`}>
+        <Link to={`../${AppRoute.Offer}/${offerCard.id}`}>
           <img className="place-card__image" src={offerCard.previewImage} width="150" height="110" alt="Place image" />
         </Link>
       </div>
@@ -41,7 +41,7 @@ export default function FavoriteCard({offerCard}: FavoriteCardProps): JSX.Elemen
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Offer}/${offerCard.id}`}>{offerCard.title}</Link>
+          <Link to={`../${AppRoute.Offer}/${offerCard.id}`}>{offerCard.title}</Link>
         </h2>
         <p className="place-card__type">{offerCard.type}</p>
       </div>
