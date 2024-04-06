@@ -1,8 +1,8 @@
 import { MouseEvent } from 'react';
-import { CITIES_LOCATION, Cities } from '../../const';
+import { CITIES_LOCATION } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeCity, fillOffers } from '../../store/actions';
-import { City } from '../../types';
+import { changeCity, sortForCurrentCity } from '../../store/actions';
+import { CitiesNames, City } from '../../types';
 
 export default function LocationsList(): JSX.Element {
   const locations = Object.keys(CITIES_LOCATION);
@@ -12,8 +12,8 @@ export default function LocationsList(): JSX.Element {
   const onLocationClick = (evt: MouseEvent<HTMLElement>, location: string) => {
     evt.preventDefault();
 
-    dispatch(changeCity(CITIES_LOCATION[location as keyof typeof Cities]));
-    dispatch(fillOffers());
+    dispatch(changeCity(CITIES_LOCATION[location as CitiesNames]));
+    dispatch(sortForCurrentCity());
   };
 
   return (

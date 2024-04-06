@@ -26,8 +26,8 @@ const currentCustomIcon = leaflet.icon({
 
 export default function Map({city, activePoint, containerClass}: MapProps): JSX.Element {
   const mapRef = useRef(null);
-  const points = useAppSelector((state) => state.offers);
   const map = useMap({mapRef, city});
+  const pointsByCity = useAppSelector((state) => state.currentCityOffers);
 
   useEffect(() => {
     if (map) {
@@ -35,7 +35,7 @@ export default function Map({city, activePoint, containerClass}: MapProps): JSX.
         [city.location.latitude, city.location.longitude],
         city.location.zoom
       );
-      points.forEach((card) => {
+      pointsByCity?.forEach((card) => {
         leaflet
           .marker({
             lat: card.location.latitude,
@@ -48,7 +48,7 @@ export default function Map({city, activePoint, containerClass}: MapProps): JSX.
           .addTo(map);
       });
     }
-  }, [map, points, city, activePoint]);
+  }, [map, pointsByCity, city, activePoint]);
 
   return (
     <section ref={mapRef} className={`${containerClass} map`}></section>

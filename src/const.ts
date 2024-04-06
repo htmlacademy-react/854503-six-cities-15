@@ -1,4 +1,4 @@
-import { City } from './types';
+import { CitiesNames, City } from './types';
 
 export const RATING_STEP = 20;
 
@@ -40,7 +40,7 @@ export enum Months {
   'December'
 }
 
-export const CITIES_LOCATION: Record<keyof typeof Cities, City> = {
+export const CITIES_LOCATION: Record<CitiesNames, City> = {
   Paris: {
     name: 'Paris',
     location: {

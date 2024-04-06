@@ -163,7 +163,7 @@ export default function OfferPage(props: OfferPageProps): JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <OffersList
-              offerCards={offerCards}
+              offerCards={offerCards.slice(0, 3)}
               blockClass={OFFER_BLOCK_CLASS}
               onOfferCardMouseEnter={() => null}
               onOfferCardMouseLeave={() => null}

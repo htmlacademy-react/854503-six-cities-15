@@ -1,20 +1,20 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { OFFER_CARDS } from '../mocks/offers';
-import { changeCity, fillOffers } from './actions';
-import { SortedCards } from '../types';
+import { changeCity, fillOffers, sortForCurrentCity } from './actions';
+import { CitiesNames, City, OfferCardType, SortedCards } from '../types';
 import { sortOffersByCity } from '../common/utils';
-import { Cities } from '../const';
+import { CITIES_LOCATION, Cities } from '../const';
 
-export const initialState = {
-  city: {
-    name: 'Amsterdam',
-    location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
-      zoom: 8
-    },
-  },
-  offers: [...OFFER_CARDS]
+type State = {
+  city: City;
+  offers: OfferCardType[];
+  currentCityOffers: OfferCardType[] | undefined;
+}
+
+export const initialState: State = {
+  city: CITIES_LOCATION.Paris,
+  offers: [],
+  currentCityOffers: []
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -23,12 +23,15 @@ export const reducer = createReducer(initialState, (builder) => {
       state.city = action.payload;
     })
     .addCase(fillOffers, (state) => {
-      const filteredCities: SortedCards<typeof Cities> = sortOffersByCity(OFFER_CARDS);
+      state.offers = [...OFFER_CARDS];
+    })
+    .addCase(sortForCurrentCity, (state) => {
+      const sortedCities: SortedCards<typeof Cities> = sortOffersByCity(state.offers);
 
-      if (filteredCities[state.city.name as keyof typeof Cities]) {
-        state.offers = filteredCities[state.city.name as keyof typeof Cities]!;
+      if (sortedCities[state.city.name as CitiesNames]) {
+        state.currentCityOffers = sortedCities[state.city.name as CitiesNames]!;
       } else {
-        state.offers = [];
+        state.currentCityOffers = [];
       }
     });
 });

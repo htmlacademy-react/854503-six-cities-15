@@ -20,3 +20,5 @@ export type ImageSizeType = {
   width: number;
   height: number;
 }
+
+export type CitiesNames = keyof typeof Cities;

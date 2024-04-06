@@ -1,4 +1,4 @@
-import { Cities } from '../const';
+import { CitiesNames } from '.';
 
 export type Offer = {
   id: string;
@@ -6,7 +6,7 @@ export type Offer = {
   type: string;
   price: number;
   city: {
-    name: keyof typeof Cities;
+    name: CitiesNames;
     location: {
       latitude: number;
       longitude: number;
@@ -39,7 +39,7 @@ export type OfferCardType = {
   type: string;
   price: number;
   city: {
-    name: keyof typeof Cities;
+    name: CitiesNames;
     location: {
       latitude: number;
       longitude: number;

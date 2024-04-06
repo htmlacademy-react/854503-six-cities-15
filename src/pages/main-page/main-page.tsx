@@ -11,14 +11,14 @@ const MAIN_LIST_CLASS = 'cities__places-list tabs__content';
 const MAIN_BLOCK_CLASS = 'cities';
 
 type MainPageProps = {
-  offersAmount: number;
-  offerCards: OfferCardType[];
   renderMap: RenderMapFunctionType;
 }
 
-export default function MainPage({offersAmount, offerCards, renderMap}: MainPageProps) {
+export default function MainPage({renderMap}: MainPageProps) {
   const [activeCard, setActiveCard] = useState<OfferCardType | null>(null);
   const currentCity = useAppSelector((state) => state.city);
+  const offers = useAppSelector((state) => state.currentCityOffers);
+  const offersAmount = offers?.length || 0;
 
   function onOfferCardMouseEnter(card: OfferCardType): void {
     setActiveCard(card);
@@ -61,7 +61,7 @@ export default function MainPage({offersAmount, offerCards, renderMap}: MainPage
                     </ul>
                   </form>
                   <OffersList
-                    offerCards={offerCards}
+                    offerCards={offers}
                     onOfferCardMouseEnter={onOfferCardMouseEnter}
                     onOfferCardMouseLeave={onOfferCardMouseLeave}
                     containerClass={MAIN_LIST_CLASS}

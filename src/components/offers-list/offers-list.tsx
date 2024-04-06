@@ -2,7 +2,7 @@ import { OfferCardType } from '../../types';
 import OfferCard from '../offer-card/offer-card';
 
 type OffersListProps = {
-  offerCards: OfferCardType[];
+  offerCards: OfferCardType[] | undefined;
   blockClass: string;
   containerClass?: string;
   onOfferCardMouseEnter: (card: OfferCardType) => void;
@@ -10,11 +10,11 @@ type OffersListProps = {
 }
 
 function getOffers(
-  offerCards: OfferCardType[],
+  offerCards: OfferCardType[] | undefined,
   blockClass:string,
   onOfferCardMouseEnter: (card: OfferCardType) => void,
-  onOfferCardMouseLeave: () => void): JSX.Element[] {
-  return offerCards.map((offerCard) => (
+  onOfferCardMouseLeave: () => void): JSX.Element[] | undefined {
+  return offerCards?.map((offerCard) => (
     <OfferCard
       onOfferCardMouseEnter={onOfferCardMouseEnter}
       onOfferCardMouseLeave={onOfferCardMouseLeave}

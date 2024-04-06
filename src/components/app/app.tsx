@@ -12,6 +12,8 @@ import OfferPage from '../../pages/offer-page/offer-page';
 import { sortOffersByCity } from '../../common/utils';
 import { ReviewType } from '../../types';
 import withMap from '../../hocs/with-map/with-map';
+import { useAppDispatch } from '../../hooks';
+import { fillOffers, sortForCurrentCity } from '../../store/actions';
 
 type AppComponentProps = {
   offerCards: OfferCardType[];
@@ -23,8 +25,11 @@ const OfferPageWrapped = withMap(OfferPage);
 const MainPageWrapped = withMap(MainPage);
 
 export default function App({offerCards, offers, reviews}: AppComponentProps): JSX.Element {
-  const offersAmount = offers.length;
   const cardsSortedByCity = sortOffersByCity(offerCards);
+  const dispatch = useAppDispatch();
+
+  dispatch(fillOffers());
+  dispatch(sortForCurrentCity());
 
   return (
     <HelmetProvider>
@@ -35,10 +40,7 @@ export default function App({offerCards, offers, reviews}: AppComponentProps): J
             <Route
               index
               element={
-                <MainPageWrapped
-                  offersAmount={offersAmount}
-                  offerCards={offerCards}
-                />
+                <MainPageWrapped/>
               }
             />
             <Route
