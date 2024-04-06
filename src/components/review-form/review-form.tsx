@@ -1,8 +1,26 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
+import { useAppDispatch } from '../../hooks';
+import { postUserReviewAction } from '../../store/api-actions';
+import { UserReview } from '../../types';
+
+const MIN_REVIEW_LENGTH = 50;
+const MAX_REVIEW_LENGTH = 300;
+
+type ReviewFormProps = {
+  offerId: string;
+}
+
+const RATING_MAP: Record<string, string> = {
+  1: 'terribly',
+  2: 'badly',
+  3: 'not bad',
+  4: 'good',
+  5: 'perfect'
+};
 
 function onRatingInputChange(evt: ChangeEvent<HTMLInputElement>, handler: (value: number) => void) {
   evt.preventDefault();
-  handler(Number.parseInt(evt.target.value, 10));
+  handler(Number(evt.target.value));
 }
 
 function onMessageTextAreaChange(evt: ChangeEvent<HTMLTextAreaElement>, handler: (value: string) => void) {
@@ -10,84 +28,76 @@ function onMessageTextAreaChange(evt: ChangeEvent<HTMLTextAreaElement>, handler:
   handler(evt.target.value);
 }
 
-export default function ReviewForm(): JSX.Element {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
   const [rating, setRating] = useState(0);
   const [message, setMessage] = useState('');
+  const [isPending, setIsPending] = useState(false);
+
+  function clearForm() {
+    setRating(0);
+    setMessage('');
+  }
+
+  function isValid() {
+    return rating && (message.length >= MIN_REVIEW_LENGTH && message.length <= MAX_REVIEW_LENGTH);
+  }
+
+  function handleFormSubmit(evt: FormEvent<HTMLFormElement>) {
+    evt.preventDefault();
+    setIsPending(true);
+
+    if (!isValid()) {
+      // eslint-disable-next-line no-console
+      console.log('form is not valid');
+      setIsPending(false);
+      return;
+    }
+
+    const userReview: UserReview = {
+      offerId,
+      riview: {
+        rating,
+        comment: message
+      }
+    };
+
+    dispatch(postUserReviewAction(userReview));
+
+    clearForm();
+    setIsPending(false);
+  }
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form onSubmit={handleFormSubmit} className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="5"
-          id="5-stars"
-          type="radio"
-          onChange={(e) => onRatingInputChange(e, setRating)}
-        />
-        <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="4"
-          id="4-stars"
-          type="radio"
-          onChange={(e) => onRatingInputChange(e, setRating)}
-        />
-        <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="3"
-          id="3-stars"
-          type="radio"
-          onChange={(e) => onRatingInputChange(e, setRating)}
-        />
-        <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="2"
-          id="2-stars"
-          type="radio"
-          onChange={(e) => onRatingInputChange(e, setRating)}
-        />
-        <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="1"
-          id="1-star"
-          type="radio"
-          onChange={(e) => onRatingInputChange(e, setRating)}
-        />
-        <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
+        {
+          Object.keys(RATING_MAP).map((item) => (
+            <Fragment key={RATING_MAP[item]}>
+              <input
+                className="form__rating-input visually-hidden"
+                name="rating"
+                value={item}
+                id={`${item}-stars`}
+                type="radio"
+                checked={Number(item) === rating}
+                disabled={isPending}
+                onChange={(evt) => onRatingInputChange(evt, setRating)}
+              />
+              <label
+                htmlFor={`${item}-stars`}
+                className="reviews__rating-label form__rating-label"
+                title={RATING_MAP[item]}
+              >
+                <svg className="form__star-image" width="37" height="33">
+                  <use xlinkHref="#icon-star"></use>
+                </svg>
+              </label>
+            </Fragment>
+          )).reverse()
+        }
       </div>
       <textarea
         className="reviews__textarea form__textarea"
@@ -95,14 +105,21 @@ export default function ReviewForm(): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={message}
-        onChange={(e) => onMessageTextAreaChange(e, setMessage)}
+        disabled={isPending}
+        onChange={(evt) => onMessageTextAreaChange(evt, setMessage)}
       >
       </textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
+        <button
+          disabled={isPending}
+          className="reviews__submit form__submit button"
+          type="submit"
+        >
+          Submit
+        </button>
       </div>
     </form>
   );

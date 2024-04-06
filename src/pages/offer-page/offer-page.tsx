@@ -1,32 +1,61 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import PageHeader from '../../components/page-header/page-header';
-import { Offer, OfferCardType } from '../../types';
+import { City, Offer, OfferCardType } from '../../types';
 import NotFoundPage from '../not-found-page/not-found-page';
 import ReviewForm from '../../components/review-form/review-form';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import { ReviewType } from '../../types';
 import { RenderMapFunctionType } from '../../types';
 import OffersList from '../../components/offers-list/offers-list';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getRatingWidth } from '../../common/utils';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { MouseEvent, useEffect } from 'react';
+import { fetchNearbyOffersAction, fetchOfferDataAction, fetchReviewsAction } from '../../store/api-actions';
+import OfferImage from './components/offer-image';
+import OfferGoods from './components/offer-goods';
+import OfferFeatures from './components/offer-features';
+import OfferHost from './components/offer-host';
 
 const MAP_CLASS = 'offer__map';
 const OFFER_BLOCK_CLASS = 'near-places';
 
 type OfferPageProps = {
-  offers: Offer[];
-  reviews: ReviewType[];
   renderMap: RenderMapFunctionType;
 }
 
-export default function OfferPage(props: OfferPageProps): JSX.Element {
-  const {offers, reviews, renderMap} = props;
-  const params = useParams();
-  const offerCards: OfferCardType[] = useAppSelector((state) => state.offers);
-  const currentOffer = offers.find((offer) => offer.id === params.id);
+export default function OfferPage({renderMap}: OfferPageProps): JSX.Element {
+  const {id: offerId} = useParams();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  return currentOffer ? (
+  const isAuth = useAppSelector((state) => state.authorizationStatus) === AuthorizationStatus.Auth;
+  const offerData: Offer | null = useAppSelector((state) => state.detailedOffer);
+  const reviews: ReviewType[] = useAppSelector((state) => state.reviews);
+  const nearbyOffers: OfferCardType[] = useAppSelector((state) => state.nearbyOffers);
+  const city: City = useAppSelector((state) => state.city);
+
+  useEffect(() => {
+    if (!offerId) {
+      return;
+    }
+
+    dispatch(fetchOfferDataAction(offerId));
+    dispatch(fetchReviewsAction(offerId));
+    dispatch(fetchNearbyOffersAction(offerId));
+
+  }, [offerId, dispatch]);
+
+  function handleBookmarkClick(evt: MouseEvent<HTMLButtonElement>) {
+    evt.preventDefault();
+
+    if (!isAuth) {
+      navigate(AppRoute.Login);
+    }
+  }
+
+  return offerData ? (
     <div className="page">
       <Helmet>
         <title>6 cities. Offer</title>
@@ -36,24 +65,11 @@ export default function OfferPage(props: OfferPageProps): JSX.Element {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/room.jpg" alt="Photo studio" />
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio" />
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-02.jpg" alt="Photo studio" />
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-03.jpg" alt="Photo studio" />
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/studio-01.jpg" alt="Photo studio" />
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio" />
-              </div>
+              {
+                offerData.images.map((image) => (
+                  <OfferImage url={image} key={image} />
+                ))
+              }
             </div>
           </div>
           <div className="offer__container container">
@@ -63,9 +79,9 @@ export default function OfferPage(props: OfferPageProps): JSX.Element {
               </div>
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
-                  Beautiful &amp; luxurious studio at great location
+                  {offerData.title}
                 </h1>
-                <button className="offer__bookmark-button button" type="button">
+                <button onClick={handleBookmarkClick} className="offer__bookmark-button button" type="button">
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -74,97 +90,53 @@ export default function OfferPage(props: OfferPageProps): JSX.Element {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{width: getRatingWidth(currentOffer.rating)}}></span>
+                  <span style={{width: getRatingWidth(offerData.rating)}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="offer__rating-value rating__value">4.8</span>
+                <span className="offer__rating-value rating__value">{offerData.rating}</span>
               </div>
-              <ul className="offer__features">
-                <li className="offer__feature offer__feature--entire">
-                  Apartment
-                </li>
-                <li className="offer__feature offer__feature--bedrooms">
-                  3 Bedrooms
-                </li>
-                <li className="offer__feature offer__feature--adults">
-                  Max 4 adults
-                </li>
-              </ul>
+              <OfferFeatures
+                type={offerData.type}
+                bedrooms={offerData.bedrooms}
+                maxAdults={offerData.maxAdults}
+              />
               <div className="offer__price">
-                <b className="offer__price-value">&euro;120</b>
+                <b className="offer__price-value">&euro;{offerData.price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
-                <ul className="offer__inside-list">
-                  <li className="offer__inside-item">
-                    Wi-Fi
-                  </li>
-                  <li className="offer__inside-item">
-                    Washing machine
-                  </li>
-                  <li className="offer__inside-item">
-                    Towels
-                  </li>
-                  <li className="offer__inside-item">
-                    Heating
-                  </li>
-                  <li className="offer__inside-item">
-                    Coffee machine
-                  </li>
-                  <li className="offer__inside-item">
-                    Baby seat
-                  </li>
-                  <li className="offer__inside-item">
-                    Kitchen
-                  </li>
-                  <li className="offer__inside-item">
-                    Dishwasher
-                  </li>
-                  <li className="offer__inside-item">
-                    Cabel TV
-                  </li>
-                  <li className="offer__inside-item">
-                    Fridge
-                  </li>
-                </ul>
+                <OfferGoods goods={offerData.goods} />
               </div>
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
-                <div className="offer__host-user user">
-                  <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="offer__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
-                  </div>
-                  <span className="offer__user-name">
-                    Angelina
-                  </span>
-                  <span className="offer__user-status">
-                    Pro
-                  </span>
-                </div>
+                <OfferHost
+                  name={offerData.host.name}
+                  avatarUrl={offerData.host.avatarUrl}
+                  isPro={offerData.host.isPro}
+                />
                 <div className="offer__description">
                   <p className="offer__text">
-                    A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                  </p>
-                  <p className="offer__text">
-                    An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
+                    {offerData.description}
                   </p>
                 </div>
               </div>
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
                 <ReviewsList reviews={reviews}/>
-                <ReviewForm />
+                {
+                  isAuth && <ReviewForm offerId={offerData.id}/>
+                }
               </section>
             </div>
           </div>
-          {renderMap(offerCards[0].city, offerCards[0], MAP_CLASS)}
+          {renderMap(city, nearbyOffers.slice(0, 3), offerData, MAP_CLASS)}
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <OffersList
-              offerCards={offerCards.slice(0, 3)}
+              offerCards={nearbyOffers.slice(0, 3)}
               blockClass={OFFER_BLOCK_CLASS}
               onOfferCardMouseEnter={() => null}
               onOfferCardMouseLeave={() => null}

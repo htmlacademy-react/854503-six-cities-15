@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { OFFER_CARDS } from '../mocks/offers';
-import { changeCity, fillOffers, loadOffers, setAuthorizationStatus, setOffersDataLoadingStatus, setUserData } from './actions';
-import { City, OfferCardType, UserData } from '../types';
+import { changeCity, loadDetailedOffer, loadNearbyOffers, loadOffers, loadReviews, loadUserReview, setAuthorizationStatus, setOffersDataLoadingStatus, setUserData } from './actions';
+import { City, Offer, OfferCardType, ReviewType, UserData } from '../types';
 import { AuthorizationStatus, CITIES_LOCATION } from '../const';
 
 type State = {
@@ -10,6 +10,9 @@ type State = {
   authorizationStatus: AuthorizationStatus;
   city: City;
   offers: OfferCardType[];
+  detailedOffer: Offer | null;
+  reviews: ReviewType[];
+  nearbyOffers: OfferCardType[];
 }
 
 export const initialState: State = {
@@ -17,7 +20,10 @@ export const initialState: State = {
   isOffersDataLoading: false,
   authorizationStatus: AuthorizationStatus.NoAuth,
   city: CITIES_LOCATION.Paris,
-  offers: OFFER_CARDS
+  offers: OFFER_CARDS,
+  detailedOffer: null,
+  reviews: [],
+  nearbyOffers: []
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -25,11 +31,14 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(changeCity, (state, action) => {
       state.city = action.payload;
     })
-    .addCase(fillOffers, (state) => {
-      state.offers = [...OFFER_CARDS];
-    })
     .addCase(loadOffers, (state, action) => {
-      // state.offers = action.payload;
+      state.offers = action.payload;
+    })
+    .addCase(loadDetailedOffer, (state, action) => {
+      state.detailedOffer = action.payload;
+    })
+    .addCase(loadNearbyOffers, (state, action) => {
+      state.nearbyOffers = action.payload;
     })
     .addCase(setOffersDataLoadingStatus, (state, action) => {
       state.isOffersDataLoading = action.payload;
@@ -39,5 +48,11 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setUserData, (state, action) => {
       state.userData = action.payload;
+    })
+    .addCase(loadReviews, (state, action) => {
+      state.reviews = action.payload;
+    })
+    .addCase(loadUserReview, (state, action) => {
+      state.reviews.push(action.payload);
     });
 });

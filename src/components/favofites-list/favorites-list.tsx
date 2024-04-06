@@ -1,18 +1,18 @@
-import { CitiesNames, SortedCardsByCityType } from '../../types';
+import { CitiesNames, OffersSortedByCities } from '../../types';
 import { OfferCardType } from '../../types';
 import OfferCard from '../offer-card/offer-card';
 
 const FAVORITE_BLOCK_CLASS = 'favorites';
 
 type FavoritesListProps = {
-  cardsSortedByCity: SortedCardsByCityType;
+  offersSortedByCity: OffersSortedByCities;
 }
 
-function createFavoriteList(cardsSortedByCity: SortedCardsByCityType): JSX.Element[] {
-  const favoriteItems: JSX.Element[] = [];
+function createFavoriteList(offersSortedByCity: OffersSortedByCities): (JSX.Element | null)[] {
+  const favoriteItems: (JSX.Element | null)[] = [];
 
-  Object.keys(cardsSortedByCity).forEach((city) => {
-    const item = cardsSortedByCity[city].length === 0 ? null : (
+  Object.keys(offersSortedByCity).forEach((city) => {
+    const item = offersSortedByCity[city as CitiesNames].length === 0 ? null : (
       <li
         className="favorites__locations-items"
         key={city}
@@ -25,7 +25,7 @@ function createFavoriteList(cardsSortedByCity: SortedCardsByCityType): JSX.Eleme
           </div>
         </div>
         <div className="favorites__places">
-          {(cardsSortedByCity[city as CitiesNames] as Array<OfferCardType>).map((offer) => (
+          {(offersSortedByCity[city as CitiesNames] as Array<OfferCardType>).map((offer) => (
             <OfferCard
               offerCard={offer}
               blockClass={FAVORITE_BLOCK_CLASS}
@@ -45,10 +45,10 @@ function createFavoriteList(cardsSortedByCity: SortedCardsByCityType): JSX.Eleme
   return favoriteItems;
 }
 
-export default function FavoritesList({cardsSortedByCity}: FavoritesListProps): JSX.Element {
+export default function FavoritesList({offersSortedByCity}: FavoritesListProps): JSX.Element {
   return (
     <ul className="favorites__list">
-      { createFavoriteList(cardsSortedByCity) }
+      { createFavoriteList(offersSortedByCity) }
     </ul>
   );
 }

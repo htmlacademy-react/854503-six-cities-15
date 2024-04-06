@@ -38,5 +38,10 @@ export function sortOffersByValue(offers: OfferCardType[], value: string): Offer
 }
 
 export function getRatingWidth(rating: number): string {
-  return `${RATING_WIDTH_STEP * rating}%`;
+  return `${RATING_WIDTH_STEP * Math.round(rating)}%`;
 }
+
+export function capitalized(word: string): string {
+  return `${word.charAt(0).toUpperCase()}${word.slice(1)}`;
+}
+
