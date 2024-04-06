@@ -12,7 +12,7 @@ function createFavoriteList(cardsSortedByCity: SortedCardsByCityType): JSX.Eleme
   const favoriteItems: JSX.Element[] = [];
 
   Object.keys(cardsSortedByCity).forEach((city) => {
-    const item = (
+    const item = cardsSortedByCity[city].length === 0 ? null : (
       <li
         className="favorites__locations-items"
         key={city}

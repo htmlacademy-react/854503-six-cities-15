@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { OFFER_CARDS } from '../mocks/offers';
-import { changeCity, fillOffers, loadOffers, setOffersDataLoadingStatus } from './actions';
+import { changeCity, fillOffers, loadOffers, setAuthorizationStatus, setOffersDataLoadingStatus } from './actions';
 import { City, OfferCardType } from '../types';
 import { AuthorizationStatus, CITIES_LOCATION } from '../const';
 
@@ -14,10 +14,10 @@ type State = {
 
 export const initialState: State = {
   city: CITIES_LOCATION.Paris,
-  offers: [],
+  offers: OFFER_CARDS,
   currentCityOffers: [],
   isOffersDataLoading: false,
-  authorizationStatus: AuthorizationStatus.Unknown
+  authorizationStatus: AuthorizationStatus.NoAuth
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -29,9 +29,12 @@ export const reducer = createReducer(initialState, (builder) => {
       state.offers = [...OFFER_CARDS];
     })
     .addCase(loadOffers, (state, action) => {
-      state.offers = action.payload;
+      // state.offers = action.payload;
     })
     .addCase(setOffersDataLoadingStatus, (state, action) => {
       state.isOffersDataLoading = action.payload;
+    })
+    .addCase(setAuthorizationStatus, (state, action) => {
+      // state.authorizationStatus = action.payload;
     });
 });
