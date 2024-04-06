@@ -1,14 +1,13 @@
 import { Helmet } from 'react-helmet-async';
 import PageHeader from '../../components/page-header/page-header';
 import FavoritesList from '../../components/favofites-list/favorites-list';
-import { Cities } from '../../const';
-import { SortedCards } from '../../types';
+import { useAppSelector } from '../../hooks';
+import { OfferCardType } from '../../types';
+import { sortOffersByCity } from '../../common/utils';
 
-type FavoritesPageProps = {
-  cardsSortedByCity: SortedCards<typeof Cities>;
-}
+export default function FavoritesPage(): JSX.Element {
+  const offers: OfferCardType[] = useAppSelector((state) => state.offers);
 
-export default function FavoritesPage({cardsSortedByCity}: FavoritesPageProps): JSX.Element {
   return (
     <div className="page">
       <Helmet>
@@ -19,7 +18,7 @@ export default function FavoritesPage({cardsSortedByCity}: FavoritesPageProps): 
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-            <FavoritesList cardsSortedByCity={cardsSortedByCity} />
+            <FavoritesList cardsSortedByCity={sortOffersByCity(offers)} />
           </section>
         </div>
       </main>

@@ -1,9 +1,7 @@
 import { Cities, SORT_BY_VALUES } from '../const';
 import { OfferCardType } from './offer';
 
-export type SortedCards<T> = Partial<Record<keyof T, OfferCardType[]>>;
-
-export type SortedCardsByCityType = SortedCards<typeof Cities>;
+export type OffersSortedByCities = Record<keyof typeof Cities, OfferCardType[]>;
 
 export type LocationType = {
   latitude: number;

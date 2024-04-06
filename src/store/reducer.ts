@@ -1,20 +1,23 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { OFFER_CARDS } from '../mocks/offers';
-import { changeCity, fillOffers, sortForCurrentCity } from './actions';
-import { CitiesNames, City, OfferCardType, SortedCards } from '../types';
-import { sortOffersByCity } from '../common/utils';
-import { CITIES_LOCATION, Cities } from '../const';
+import { changeCity, fillOffers, loadOffers, setOffersDataLoadingStatus } from './actions';
+import { City, OfferCardType } from '../types';
+import { AuthorizationStatus, CITIES_LOCATION } from '../const';
 
 type State = {
   city: City;
   offers: OfferCardType[];
   currentCityOffers: OfferCardType[];
+  isOffersDataLoading: boolean;
+  authorizationStatus: AuthorizationStatus;
 }
 
 export const initialState: State = {
   city: CITIES_LOCATION.Paris,
   offers: [],
-  currentCityOffers: []
+  currentCityOffers: [],
+  isOffersDataLoading: false,
+  authorizationStatus: AuthorizationStatus.Unknown
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -25,13 +28,10 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(fillOffers, (state) => {
       state.offers = [...OFFER_CARDS];
     })
-    .addCase(sortForCurrentCity, (state) => {
-      const sortedCities: SortedCards<typeof Cities> = sortOffersByCity(state.offers);
-
-      if (sortedCities[state.city.name as CitiesNames]) {
-        state.currentCityOffers = sortedCities[state.city.name as CitiesNames]!;
-      } else {
-        state.currentCityOffers = [];
-      }
+    .addCase(loadOffers, (state, action) => {
+      state.offers = action.payload;
+    })
+    .addCase(setOffersDataLoadingStatus, (state, action) => {
+      state.isOffersDataLoading = action.payload;
     });
 });

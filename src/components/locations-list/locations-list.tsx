@@ -1,7 +1,7 @@
 import { MouseEvent } from 'react';
 import { CITIES_LOCATION } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeCity, sortForCurrentCity } from '../../store/actions';
+import { changeCity } from '../../store/actions';
 import { CitiesNames, City } from '../../types';
 
 export default function LocationsList(): JSX.Element {
@@ -13,7 +13,6 @@ export default function LocationsList(): JSX.Element {
     evt.preventDefault();
 
     dispatch(changeCity(CITIES_LOCATION[location as CitiesNames]));
-    dispatch(sortForCurrentCity());
   };
 
   return (

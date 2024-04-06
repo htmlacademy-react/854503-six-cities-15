@@ -7,29 +7,20 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import { PrivateRoute } from '../private-route/private-route';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import { HelmetProvider } from 'react-helmet-async';
-import { Offer, OfferCardType } from '../../types';
 import OfferPage from '../../pages/offer-page/offer-page';
-import { sortOffersByCity } from '../../common/utils';
-import { ReviewType } from '../../types';
 import withMap from '../../hocs/with-map/with-map';
-import { useAppDispatch } from '../../hooks';
-import { fillOffers, sortForCurrentCity } from '../../store/actions';
-
-type AppComponentProps = {
-  offerCards: OfferCardType[];
-  offers: Offer[];
-  reviews: ReviewType[];
-}
+import { useAppSelector } from '../../hooks';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 const OfferPageWrapped = withMap(OfferPage);
 const MainPageWrapped = withMap(MainPage);
 
-export default function App({offerCards, offers, reviews}: AppComponentProps): JSX.Element {
-  const cardsSortedByCity = sortOffersByCity(offerCards);
-  const dispatch = useAppDispatch();
+export default function App(): JSX.Element {
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
 
-  dispatch(fillOffers());
-  dispatch(sortForCurrentCity());
+  if (isOffersDataLoading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <HelmetProvider>
@@ -51,17 +42,14 @@ export default function App({offerCards, offers, reviews}: AppComponentProps): J
               path={AppRoute.Favorites}
               element={
                 <PrivateRoute authStatus={AuthorizationStatus.Auth}>
-                  <FavoritesPage cardsSortedByCity={cardsSortedByCity}/>
+                  <FavoritesPage />
                 </PrivateRoute>
               }
             />
             <Route
               path={`${AppRoute.Offer}/:id`}
               element={
-                <OfferPageWrapped
-                  offers={offers}
-                  reviews={reviews}
-                />
+                <OfferPageWrapped />
               }
             />
           </Route>
