@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { ImageSizeType, OfferCardType } from '../../types';
 import { getRatingWidth } from '../../common/utils';
+import { fetchOfferDataAction } from '../../store/api-actions';
+import { useAppDispatch } from '../../hooks';
 
 type OfferCardProps = {
   offerCard: OfferCardType;
@@ -9,15 +11,15 @@ type OfferCardProps = {
   imageSize?: ImageSizeType;
   onOfferCardMouseEnter?: (card: OfferCardType) => void;
   onOfferCardMouseLeave?: () => void;
-  onOfferCardClick: (id: string) => void;
 }
 
 export default function OfferCard(props: OfferCardProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
   const {
     offerCard,
     onOfferCardMouseEnter,
     onOfferCardMouseLeave,
-    onOfferCardClick,
     blockClass,
     imageSize = {
       width: 260,
@@ -25,11 +27,14 @@ export default function OfferCard(props: OfferCardProps): JSX.Element {
     }
   } = props;
 
+  function handleOfferCardClick(): void {
+    dispatch(fetchOfferDataAction(offerCard.id));
+  }
+
   return (
     <article
       onMouseEnter={() => onOfferCardMouseEnter && onOfferCardMouseEnter(offerCard)}
       onMouseLeave={() => onOfferCardMouseLeave && onOfferCardMouseLeave()}
-      onClick={() => onOfferCardClick(offerCard.id)}
       className={`${blockClass}__card place-card`}
     >
       {
@@ -40,7 +45,7 @@ export default function OfferCard(props: OfferCardProps): JSX.Element {
           ''
       }
       <div className={`${blockClass}__image-wrapper place-card__image-wrapper`}>
-        <Link to={`${AppRoute.Offer}/${offerCard.id}`}>
+        <Link onClick={handleOfferCardClick} to={`${AppRoute.Offer}/${offerCard.id}`}>
           <img className='place-card__image' src={offerCard.previewImage} width={imageSize.width} height={imageSize.height} alt="Place image" />
         </Link>
       </div>
@@ -70,7 +75,7 @@ export default function OfferCard(props: OfferCardProps): JSX.Element {
           </div>
         </div>
         <h2 className='place-card__name'>
-          <Link to={`${AppRoute.Offer}/${offerCard.id}`}>{offerCard.title}</Link>
+          <Link onClick={handleOfferCardClick} to={`${AppRoute.Offer}/${offerCard.id}`}>{offerCard.title}</Link>
         </h2>
         <p className='place-card__type'>{offerCard.type}</p>
       </div>

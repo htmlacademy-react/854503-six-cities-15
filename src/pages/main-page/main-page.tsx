@@ -4,7 +4,7 @@ import PageHeader from '../../components/page-header/page-header';
 import OffersList from '../../components/offers-list/offers-list';
 import { City, OfferCardType, RenderMapFunctionType, SortingType } from '../../types';
 import LocationsList from '../../components/locations-list/locations-list';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import Sorting from '../../components/sorting/sorting';
 import { Cities, SORT_BY_VALUES } from '../../const';
 import { sortOffersByCity, sortOffersByValue } from '../../common/utils';
@@ -41,10 +41,6 @@ export default function MainPage({renderMap}: MainPageProps) {
     setCurrentSorting(sortBy);
   }
 
-  function handleOfferCardClick(id: string): void {
-    fetchOfferDataAction(id);
-  }
-
   return (
     <div className={`page page--gray page--main ${!offersAmount && 'page__main--index-empty'}`}>
       <Helmet>
@@ -71,7 +67,6 @@ export default function MainPage({renderMap}: MainPageProps) {
                     offerCards={sortOffersByValue(currentOffers, currentSorting)}
                     onOfferCardMouseEnter={handleOfferCardMouseEnter}
                     onOfferCardMouseLeave={handleOfferCardMouseLeave}
-                    onOfferCardClick={handleOfferCardClick}
                     containerClass={MAIN_LIST_CLASS}
                     blockClass={MAIN_BLOCK_CLASS}
                   />

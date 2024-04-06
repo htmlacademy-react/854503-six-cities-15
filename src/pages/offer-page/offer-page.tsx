@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getRatingWidth } from '../../common/utils';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { MouseEvent, useEffect } from 'react';
-import { fetchOfferDataAction } from '../../store/api-actions';
+import { fetchNearbyOffersAction, fetchOfferDataAction, fetchReviewsAction } from '../../store/api-actions';
 import OfferImage from './components/offer-image';
 import OfferGoods from './components/offer-goods';
 import OfferFeatures from './components/offer-features';
@@ -32,6 +32,8 @@ export default function OfferPage({renderMap}: OfferPageProps): JSX.Element {
 
   const isAuth = useAppSelector((state) => state.authorizationStatus) === AuthorizationStatus.Auth;
   const offerData: Offer | null = useAppSelector((state) => state.detailedOffer);
+  const reviews: ReviewType[] = useAppSelector((state) => state.reviews);
+  const nearbyOffers: OfferCardType[] = useAppSelector((state) => state.nearbyOffers);
 
   useEffect(() => {
     if (!offerId) {
@@ -39,6 +41,8 @@ export default function OfferPage({renderMap}: OfferPageProps): JSX.Element {
     }
 
     dispatch(fetchOfferDataAction(offerId));
+    dispatch(fetchReviewsAction(offerId));
+    dispatch(fetchNearbyOffersAction(offerId));
 
   }, [offerId, dispatch]);
 
@@ -117,8 +121,8 @@ export default function OfferPage({renderMap}: OfferPageProps): JSX.Element {
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                {/* <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                <ReviewsList reviews={reviews}/> */}
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+                <ReviewsList reviews={reviews}/>
                 {
                   isAuth && <ReviewForm />
                 }
@@ -130,12 +134,12 @@ export default function OfferPage({renderMap}: OfferPageProps): JSX.Element {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            {/* <OffersList
-              offerCards={offerCards.slice(0, 3)}
+            <OffersList
+              offerCards={nearbyOffers}
               blockClass={OFFER_BLOCK_CLASS}
               onOfferCardMouseEnter={() => null}
               onOfferCardMouseLeave={() => null}
-            /> */}
+            />
           </section>
         </div>
       </main>
