@@ -13,7 +13,7 @@ export default function FavoritesPage({offerCards}: FavoritesPageProps): JSX.Ele
       <Helmet>
         <title>6 cities. Favorites</title>
       </Helmet>
-      <PageHeader />
+      <PageHeader isPlain={false} />
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">

@@ -22,7 +22,7 @@ export default function MainPage({offersAmount, offerCards}: MainPageProps) {
       <Helmet>
         <title>6 cities. Main</title>
       </Helmet>
-      <PageHeader />
+      <PageHeader isPlain={false} />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
