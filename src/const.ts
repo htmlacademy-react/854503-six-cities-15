@@ -4,10 +4,10 @@ export const RATING_WIDTH_STEP = 20;
 
 export enum AppRoute {
   Root = '/',
-  Login = 'login',
-  Favorites = 'favorites',
-  Offer = 'offer',
-  NotFound = 'not-found'
+  Login = '/login',
+  Favorites = '/favorites',
+  Offer = '/offer',
+  NotFound = '/not-found'
 }
 
 export enum AuthorizationStatus {

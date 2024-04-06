@@ -9,6 +9,7 @@ import Sorting from '../../components/sorting/sorting';
 import { Cities, SORT_BY_VALUES } from '../../const';
 import { sortOffersByCity, sortOffersByValue } from '../../common/utils';
 import MainPageEmpty from './main-page-empty';
+import { fetchOfferDataAction } from '../../store/api-actions';
 
 const MAP_CLASS = 'cities__map';
 const MAIN_LIST_CLASS = 'cities__places-list tabs__content';
@@ -31,11 +32,17 @@ export default function MainPage({renderMap}: MainPageProps) {
   function handleOfferCardMouseEnter(card: OfferCardType): void {
     setActiveCard(card);
   }
+
   function handleOfferCardMouseLeave(): void {
     setActiveCard(null);
   }
+
   function handleSortingChange(sortBy: SortingType): void {
     setCurrentSorting(sortBy);
+  }
+
+  function handleOfferCardClick(id: string): void {
+    fetchOfferDataAction(id);
   }
 
   return (
@@ -64,6 +71,7 @@ export default function MainPage({renderMap}: MainPageProps) {
                     offerCards={sortOffersByValue(currentOffers, currentSorting)}
                     onOfferCardMouseEnter={handleOfferCardMouseEnter}
                     onOfferCardMouseLeave={handleOfferCardMouseLeave}
+                    onOfferCardClick={handleOfferCardClick}
                     containerClass={MAIN_LIST_CLASS}
                     blockClass={MAIN_BLOCK_CLASS}
                   />
