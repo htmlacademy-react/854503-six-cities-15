@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { OFFERS_AMOUNT } from './const';
 import App from './components/app/app';
+import { OFFERS, OFFER_CARDS } from './mocks/offers';
+import { REVIEWS } from './mocks/reviews';
 
 
 const root = ReactDOM.createRoot(
@@ -10,6 +11,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App offersAmount= {OFFERS_AMOUNT}/>
+    <App offersCards={OFFER_CARDS} offers={OFFERS} reviews={REVIEWS} />
   </React.StrictMode>
 );
