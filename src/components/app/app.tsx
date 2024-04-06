@@ -60,6 +60,7 @@ export default function App({offerCards, offers, reviews}: AppComponentProps): J
               element={
                 <OfferPageWrapped
                   city={defaultCityLocation}
+                  offerCards={offerCards}
                   offers={offers}
                   reviews={reviews}
                 />

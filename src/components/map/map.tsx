@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { OfferLikeType } from '../../types';
+import { OfferCardType } from '../../types';
 import useMap from './use-map';
 import { LocationType } from '../../types';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from './const';
@@ -8,8 +8,8 @@ import 'leaflet/dist/leaflet.css';
 
 type MapProps = {
   cityLocation: LocationType;
-  points: OfferLikeType[];
-  activePoint: OfferLikeType | null;
+  points: OfferCardType[];
+  activePoint: OfferCardType | null;
   containerClass: string;
 }
 

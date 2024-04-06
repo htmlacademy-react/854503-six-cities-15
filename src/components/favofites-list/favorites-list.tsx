@@ -1,7 +1,9 @@
 import { Cities } from '../../const';
 import { SortedCardsByCityType } from '../../types';
 import { OfferCardType } from '../../types';
-import FavoriteCard from '../favorite-card/favorite-card';
+import OfferCard from '../offer-card/offer-card';
+
+const FAVORITE_BLOCK_CLASS = 'favorites';
 
 type FavoritesListProps = {
   cardsSortedByCity: SortedCardsByCityType;
@@ -24,7 +26,16 @@ function createFavoriteList(cardsSortedByCity: SortedCardsByCityType): JSX.Eleme
           </div>
         </div>
         <div className="favorites__places">
-          {(cardsSortedByCity[city as keyof typeof Cities] as Array<OfferCardType>).map((offer) => <FavoriteCard offerCard={offer} key={offer.id} />)}
+          {(cardsSortedByCity[city as keyof typeof Cities] as Array<OfferCardType>).map((offer) => (
+            <OfferCard
+              offerCard={offer}
+              blockClass={FAVORITE_BLOCK_CLASS}
+              imageSize={{
+                width: 150,
+                height: 110
+              }}
+              key={offer.id}
+            />))}
         </div>
       </li>
     );
