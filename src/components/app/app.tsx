@@ -16,7 +16,6 @@ import { browserHistory } from '../../browser-history';
 import { getOffersDataLoading } from '../../store/offers-process/offers-process.selectors';
 
 const OfferPageWrapped = withMap(OfferPage);
-const MainPageWrapped = withMap(MainPage);
 
 export default function App(): JSX.Element {
   const isOffersDataLoading = useAppSelector(getOffersDataLoading);
@@ -34,7 +33,7 @@ export default function App(): JSX.Element {
             <Route
               index
               element={
-                <MainPageWrapped/>
+                <MainPage />
               }
             />
             <Route

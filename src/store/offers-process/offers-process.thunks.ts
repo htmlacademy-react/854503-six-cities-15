@@ -34,7 +34,7 @@ export const fetchNearbyOffersAction = createAsyncThunk<OfferCardType[], string,
   state: State;
   extra: AxiosInstance;
 }>(
-  'offers/fetchOfferData',
+  'offers/fetchNearbyOffers',
   async (offerId, {extra: api}) => {
     const {data} = await api.get<OfferCardType[]>(`${Endpoints.Offers}/${offerId}/nearby`);
 
