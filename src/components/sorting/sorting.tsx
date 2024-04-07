@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { SORT_BY_VALUES } from '../../const';
 import { SortingType } from '../../types';
 
@@ -8,7 +8,7 @@ type SortingProps = {
   onSortingChange: (value: SortingType) => void;
 }
 
-export default function Sorting({sortBy, onSortingChange}: SortingProps): JSX.Element {
+function Sorting({sortBy, onSortingChange}: SortingProps): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -54,3 +54,5 @@ export default function Sorting({sortBy, onSortingChange}: SortingProps): JSX.El
     </form>
   );
 }
+
+export const MemoSorting = memo(Sorting);

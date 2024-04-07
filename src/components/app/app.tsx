@@ -14,7 +14,6 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import HistoryRouter from '../history-route/history-route';
 import { browserHistory } from '../../browser-history';
 import { getOffersDataLoading } from '../../store/offers-process/offers-process.selectors';
-
 const OfferPageWrapped = withMap(OfferPage);
 
 export default function App(): JSX.Element {

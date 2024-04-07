@@ -23,7 +23,7 @@ export const postUserReviewAction = createAsyncThunk<ReviewType, UserReview, {
 }>(
   'reviews/postUserReview',
   async (userReview, {extra: api}) => {
-    const {data} = await api.post<ReviewType>(`${Endpoints.Comments}/${userReview.offerId}`, userReview.riview);
+    const {data} = await api.post<ReviewType>(`${Endpoints.Comments}/${userReview.offerId}`, userReview.review);
 
     return data;
   }

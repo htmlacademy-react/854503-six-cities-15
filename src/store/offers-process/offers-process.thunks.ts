@@ -41,3 +41,29 @@ export const fetchNearbyOffersAction = createAsyncThunk<OfferCardType[], string,
     return data;
   }
 );
+
+export const fetchFavoriteOffersAction = createAsyncThunk<OfferCardType[], undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'offers/fetchFavoriteOffers',
+  async (_arg, {extra: api}) => {
+    const {data} = await api.get<OfferCardType[]>(Endpoints.Favorites);
+
+    return data;
+  }
+);
+
+export const changeOfferFavoriteStatusAction = createAsyncThunk<Offer, {offerId: string; status: number}, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'offers/changeOfferFavoriteStatus',
+  async ({offerId, status}, {extra: api}) => {
+    const {data} = await api.post<Offer>(`${Endpoints.Favorites}/${offerId}/${status}`);
+
+    return data;
+  }
+);
