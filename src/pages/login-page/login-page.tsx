@@ -1,17 +1,24 @@
 import { Helmet } from 'react-helmet-async';
 import PageHeader from '../../components/page-header/page-header';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { AppRoute } from '../../const';
-import { Link, Navigate } from 'react-router-dom';
-import { FormEvent, useRef } from 'react';
+import { AppRoute, CITIES_LOCATION, Cities } from '../../const';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { FormEvent, MouseEvent, useRef } from 'react';
 import { loginAction } from '../../store/user-process/user-process.thunks';
 import { getAuthCheckedStatus } from '../../store/user-process/user-process.selectors';
+import { changeCity } from '../../store/city/city.slice';
+import { CitiesNames } from '../../types';
+import { getRandomInt } from '../../common/utils';
 
 export default function LoginPage(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const isAuth = useAppSelector(getAuthCheckedStatus);
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-  const dispatch = useAppDispatch();
+  const randomNumber = getRandomInt(0, Object.keys(Cities).length - 1);
+  const locationName = Object.keys(Cities)[randomNumber];
 
   function handleSubmit(evt: FormEvent<HTMLFormElement>): void {
     evt.preventDefault();
@@ -22,6 +29,13 @@ export default function LoginPage(): JSX.Element {
         password: passwordRef.current.value
       }));
     }
+  }
+
+  function handleLinkClick(evt: MouseEvent<HTMLAnchorElement>): void {
+    evt.preventDefault();
+
+    dispatch(changeCity(CITIES_LOCATION[locationName as CitiesNames]));
+    navigate(AppRoute.Root);
   }
 
   return (
@@ -65,9 +79,9 @@ export default function LoginPage(): JSX.Element {
             </section>
             <section className="locations locations--login locations--current">
               <div className="locations__item">
-                <Link to={AppRoute.Root} className="locations__item-link">
-                  <span>Amsterdam</span>
-                </Link>
+                <a onClick={handleLinkClick} className="locations__item-link">
+                  <span>{locationName}</span>
+                </a>
               </div>
             </section>
           </div>

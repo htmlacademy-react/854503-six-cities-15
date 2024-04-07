@@ -1,8 +1,8 @@
 import { Helmet } from 'react-helmet-async';
 import PageHeader from '../../components/page-header/page-header';
-import FavoritesList from '../../components/favorites-list/favorites-list';
 import { getFavoriteOffers } from '../../store/offers-process/offers-process.selectors';
 import { useAppSelector } from '../../hooks';
+import FavoritesList from '../../components/favorites-list/favorites-list';
 
 export default function FavoritesPage(): JSX.Element {
   const favoriteOffersAmount = useAppSelector(getFavoriteOffers).length;

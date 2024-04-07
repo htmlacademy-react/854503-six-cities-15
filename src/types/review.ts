@@ -12,7 +12,7 @@ export type ReviewType = {
 
 export type UserReview = {
   offerId: string;
-  riview: {
+  review: {
     comment: string;
   rating: number;
   };

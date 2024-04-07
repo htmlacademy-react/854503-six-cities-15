@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { UserReview } from '../../types';
 import { postUserReviewAction } from '../../store/reviews-process/reviews-process.thunks';
+import { toast } from 'react-toastify';
 
 const MIN_REVIEW_LENGTH = 50;
 const MAX_REVIEW_LENGTH = 300;
@@ -49,15 +50,14 @@ export default function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
     setIsPending(true);
 
     if (!isValid()) {
-      // eslint-disable-next-line no-console
-      console.log('form is not valid');
+      toast.warn('Form is not valid');
       setIsPending(false);
       return;
     }
 
     const userReview: UserReview = {
       offerId,
-      riview: {
+      review: {
         rating,
         comment: message
       }

@@ -33,6 +33,7 @@ function BookmarkButton({
 
     if (!isAuth) {
       navigate(AppRoute.Login);
+      return;
     }
 
     dispatch(changeOfferFavoriteStatusAction({

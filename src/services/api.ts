@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import { getToken } from './token';
 import { StatusCodes } from 'http-status-codes';
+import { toast } from 'react-toastify';
 
 type DetailMessageType = {
   type: string;
@@ -42,8 +43,7 @@ export function createAPI():AxiosInstance {
       if (error.response && shouldDisplayError(error.response)) {
         const errorMessage = error.response.data.message;
 
-        // eslint-disable-next-line no-console
-        console.log(errorMessage);
+        toast.warn(errorMessage);
       }
 
       throw error;

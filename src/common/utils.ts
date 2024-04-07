@@ -1,9 +1,10 @@
 import { RATING_WIDTH_STEP } from '../const';
+import { ReviewType } from '../types';
 import { OffersSortedByCities } from '../types/common';
 import { OfferCardType } from '../types/offer';
 
 export function sortOffersByCity(offerCards: OfferCardType[]): OffersSortedByCities {
-  const proccessedOffers: OffersSortedByCities = {
+  const processedOffers: OffersSortedByCities = {
     Paris: [],
     Cologne: [],
     Brussels: [],
@@ -13,10 +14,10 @@ export function sortOffersByCity(offerCards: OfferCardType[]): OffersSortedByCit
   };
 
   offerCards.forEach((offer: OfferCardType) => {
-    proccessedOffers[offer.city.name].push(offer);
+    processedOffers[offer.city.name].push(offer);
   });
 
-  return proccessedOffers;
+  return processedOffers;
 }
 
 export function sortOffersByValue(offers: OfferCardType[], value: string): OfferCardType[] {
@@ -45,3 +46,15 @@ export function capitalized(word: string): string {
   return `${word.charAt(0).toUpperCase()}${word.slice(1)}`;
 }
 
+export function sortReviewByDate(reviews: ReviewType[]): ReviewType[] {
+  const sorted = reviews.slice().sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+  return sorted;
+}
+
+export function getRandomInt(a: number, b: number): number {
+  const lower = Math.ceil(Math.min(a, b));
+  const upper = Math.floor(Math.max(a, b));
+
+  return Math.floor(lower + Math.random() * (upper - lower + 1));
+}

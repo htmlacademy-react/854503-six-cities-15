@@ -6,6 +6,9 @@ import { store } from './store';
 import { fetchFavoriteOffersAction, fetchOffersAction } from './store/offers-process/offers-process.thunks';
 import { checkAuthAction } from './store/user-process/user-process.thunks';
 import { AuthorizationStatus, NameSpace } from './const';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 async function initAppStore() {
   store.dispatch(fetchOffersAction());
@@ -25,6 +28,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
+      <ToastContainer />
       <App />
     </Provider>
   </React.StrictMode>
