@@ -18,6 +18,9 @@ export const offersProcess = createSlice({
   reducers: {
     setOffersDataLoadingStatus: (state, action: PayloadAction<boolean>) => {
       state.isOffersDataLoading = action.payload;
+    },
+    clearFavoriteOffers: (state) => {
+      state.favoriteOffers = [];
     }
   },
   extraReducers(builder) {
@@ -91,4 +94,4 @@ export const offersProcess = createSlice({
   }
 });
 
-export const { setOffersDataLoadingStatus } = offersProcess.actions;
+export const { setOffersDataLoadingStatus, clearFavoriteOffers } = offersProcess.actions;

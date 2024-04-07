@@ -4,6 +4,8 @@ import { Endpoints, AppRoute } from '../../const';
 import { saveToken, dropToken } from '../../services/token';
 import { AppDispatch, UserData, AuthData, State } from '../../types';
 import { redirectToRoute } from '../actions';
+import { fetchFavoriteOffersAction } from '../offers-process/offers-process.thunks';
+import { clearFavoriteOffers } from '../offers-process/offers-process.slice';
 
 export const checkAuthAction = createAsyncThunk<UserData, undefined, {
   dispatch: AppDispatch;
@@ -28,6 +30,7 @@ export const loginAction = createAsyncThunk<UserData, AuthData, {
     const {data} = await api.post<UserData>(Endpoints.Login, {email, password});
 
     saveToken(data.token);
+    dispatch(fetchFavoriteOffersAction());
     dispatch(redirectToRoute(AppRoute.Root));
     return data;
   }
@@ -39,8 +42,10 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   extra: AxiosInstance;
 }>(
   'user/logout',
-  async (_arg, {extra: api}) => {
+  async (_arg, {dispatch, extra: api}) => {
     await api.delete(Endpoints.Logout);
+
+    dispatch(clearFavoriteOffers());
     dropToken();
   }
 );

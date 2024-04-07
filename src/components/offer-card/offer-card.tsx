@@ -5,7 +5,7 @@ import { getRatingWidth } from '../../common/utils';
 import { useAppDispatch } from '../../hooks';
 import { fetchNearbyOffersAction, fetchOfferDataAction } from '../../store/offers-process/offers-process.thunks';
 import { fetchReviewsAction } from '../../store/reviews-process/reviews-process.thunks';
-import BookmarkButton from '../bookmark-button/bookmark-button';
+import { MemoBookmarkButton } from '../bookmark-button/bookmark-button';
 
 const OFFER_CARD_BLOCK_CLASS = 'place-card';
 
@@ -63,7 +63,7 @@ export default function OfferCard(props: OfferCardProps): JSX.Element {
             <b className='place-card__price-value'>&euro;{offerCard.price}</b>
             <span className='place-card__price-text'>&#47;&nbsp;night</span>
           </div>
-          <BookmarkButton
+          <MemoBookmarkButton
             offerId={offerCard.id}
             blockClass={OFFER_CARD_BLOCK_CLASS}
             isFavorite={offerCard.isFavorite}

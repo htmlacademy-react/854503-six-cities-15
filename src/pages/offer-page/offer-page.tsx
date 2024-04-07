@@ -12,6 +12,7 @@ import Reviews from '../../components/reviews/reviews';
 import { OfferImage, OfferFeatures, OfferGoods, OfferHost } from './components';
 import BookmarkButton from '../../components/bookmark-button/bookmark-button';
 import { OFFER_BOOKMARK_IMAGE_SIZE } from '../../const';
+import { useEffect } from 'react';
 
 const MAP_CLASS = 'offer__map';
 const NEAR_OFFER_BLOCK_CLASS = 'near-places';
@@ -26,7 +27,9 @@ export default function OfferPage({renderMap}: OfferPageProps): JSX.Element {
   const nearbyOffers: OfferCardType[] = useAppSelector(getNearbyOffers);
   const city: City = useAppSelector(getCurrentCity);
 
-  return offerData ? (
+  return !offerData ? (
+    <NotFoundPage />
+  ) : (
     <div className="page">
       <Helmet>
         <title>6 cities. Offer</title>
@@ -110,7 +113,5 @@ export default function OfferPage({renderMap}: OfferPageProps): JSX.Element {
         </div>
       </main>
     </div>
-  ) : (
-    <NotFoundPage />
   );
 }

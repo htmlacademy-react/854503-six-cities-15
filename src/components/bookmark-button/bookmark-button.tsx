@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute, DEFAULT_BOOKMARK_IMAGE_SIZE } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -14,7 +14,7 @@ type BookmarkButtonProps = {
   imageSize?: ImageSizeType;
 }
 
-export default function BookmarkButton({
+function BookmarkButton({
   offerId,
   isFavorite,
   blockClass,
@@ -25,6 +25,8 @@ export default function BookmarkButton({
 
   const isAuth = useAppSelector(getAuthCheckedStatus);
   const isLoading = useAppSelector(getOffersDataUpdating);
+
+  const isActive = isAuth && isFavorite;
 
   function handleBookmarkClick(evt: MouseEvent<HTMLButtonElement>) {
     evt.preventDefault();
@@ -44,7 +46,7 @@ export default function BookmarkButton({
       className={`
       ${blockClass}__bookmark-button
       button
-      ${isFavorite ? `${blockClass}__bookmark-button--active` : ''}
+      ${isActive ? `${blockClass}__bookmark-button--active` : ''}
       `}
       type="button"
       onClick={handleBookmarkClick}
@@ -61,3 +63,5 @@ export default function BookmarkButton({
     </button>
   );
 }
+
+export const MemoBookmarkButton = memo(BookmarkButton);

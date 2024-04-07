@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import PageHeader from '../../components/page-header/page-header';
-import FavoritesList from '../../components/favofites-list/favorites-list';
+import FavoritesList from '../../components/favorites-list/favorites-list';
 import { getFavoriteOffers } from '../../store/offers-process/offers-process.selectors';
 import { useAppSelector } from '../../hooks';
 
