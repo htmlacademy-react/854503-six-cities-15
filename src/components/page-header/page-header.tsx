@@ -4,14 +4,16 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { MouseEvent } from 'react';
 import { logoutAction } from '../../store/user-process/user-process.thunks';
 import { getAuthCheckedStatus, getUserData } from '../../store/user-process/user-process.selectors';
+import { getFavoriteOffers } from '../../store/offers-process/offers-process.selectors';
 type PageHeaderProps = {
   isPlain: boolean;
 }
 
 export default function PageHeader({isPlain = false}: PageHeaderProps): JSX.Element {
+  const dispatch = useAppDispatch();
   const userData = useAppSelector(getUserData);
   const isAuth = useAppSelector(getAuthCheckedStatus);
-  const dispatch = useAppDispatch();
+  const favoriteOffersAmount = useAppSelector(getFavoriteOffers);
 
   function handleSignoutClick(evt: MouseEvent) {
     evt.preventDefault();
@@ -44,12 +46,12 @@ export default function PageHeader({isPlain = false}: PageHeaderProps): JSX.Elem
                 isAuth ? (
                   <ul className="header__nav-list">
                     <li className="header__nav-item user">
-                      <a className="header__nav-link header__nav-link--profile" href="#">
+                      <Link to={AppRoute.Favorites} className="header__nav-link header__nav-link--profile">
                         <div style={{backgroundImage: `url(${userData!.avatarUrl})`}} className="header__avatar-wrapper user__avatar-wrapper">
                         </div>
                         <span className="header__user-name user__name">{userData!.email}</span>
-                        <span className="header__favorite-count">3</span>
-                      </a>
+                        <span className="header__favorite-count">{favoriteOffersAmount.length}</span>
+                      </Link>
                     </li>
                     <li className="header__nav-item">
                       <a onClick={handleSignoutClick} className="header__nav-link">

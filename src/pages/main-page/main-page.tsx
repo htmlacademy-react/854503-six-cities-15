@@ -19,7 +19,6 @@ export default function MainPage() {
   const currentOffers: OfferCardType[] = sortOffersByCity(offers)[currentCity.name as Cities];
   const offersAmount = currentOffers.length || 0;
 
-
   return (
     <div className={`page page--gray page--main ${!offersAmount && 'page__main--index-empty'}`}>
       <Helmet>

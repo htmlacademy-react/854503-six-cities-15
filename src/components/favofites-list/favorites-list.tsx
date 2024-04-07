@@ -1,12 +1,12 @@
+import { sortOffersByCity } from '../../common/utils';
+import { OFFER_CARD_IMAGE_SIZE } from '../../const';
+import { useAppSelector } from '../../hooks';
+import { getFavoriteOffers } from '../../store/offers-process/offers-process.selectors';
 import { CitiesNames, OffersSortedByCities } from '../../types';
 import { OfferCardType } from '../../types';
 import OfferCard from '../offer-card/offer-card';
 
 const FAVORITE_BLOCK_CLASS = 'favorites';
-
-type FavoritesListProps = {
-  offersSortedByCity: OffersSortedByCities;
-}
 
 function createFavoriteList(offersSortedByCity: OffersSortedByCities): (JSX.Element | null)[] {
   const favoriteItems: (JSX.Element | null)[] = [];
@@ -29,10 +29,7 @@ function createFavoriteList(offersSortedByCity: OffersSortedByCities): (JSX.Elem
             <OfferCard
               offerCard={offer}
               blockClass={FAVORITE_BLOCK_CLASS}
-              imageSize={{
-                width: 150,
-                height: 110
-              }}
+              imageSize={OFFER_CARD_IMAGE_SIZE}
               key={offer.id}
             />))}
         </div>
@@ -45,7 +42,10 @@ function createFavoriteList(offersSortedByCity: OffersSortedByCities): (JSX.Elem
   return favoriteItems;
 }
 
-export default function FavoritesList({offersSortedByCity}: FavoritesListProps): JSX.Element {
+export default function FavoritesList(): JSX.Element {
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
+  const offersSortedByCity: OffersSortedByCities = sortOffersByCity(favoriteOffers);
+
   return (
     <ul className="favorites__list">
       { createFavoriteList(offersSortedByCity) }

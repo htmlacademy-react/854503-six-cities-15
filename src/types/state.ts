@@ -17,9 +17,11 @@ export type UserProcess = {
 
 export type OffersProcess = {
   isOffersDataLoading: boolean;
+  isOffersDataUpdating: boolean;
   offers: OfferCardType[];
   detailedOffer: Offer | null;
   nearbyOffers: OfferCardType[];
+  favoriteOffers: OfferCardType[];
 }
 
 export type ReviewsProcess = {
