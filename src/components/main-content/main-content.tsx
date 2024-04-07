@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { sortOffersByValue } from '../../common/utils';
 import { SORT_BY_VALUES } from '../../const';
 import MainPageEmpty from '../../pages/main-page/main-page-empty';
 import { City, OfferCardType, RenderMapFunctionType, SortingType } from '../../types';
 import OffersList from '../offers-list/offers-list';
-import Sorting from '../sorting/sorting';
+import { MemoSorting as Sorting} from '../sorting/sorting';
 
 const MAP_CLASS = 'cities__map';
 const MAIN_LIST_CLASS = 'cities__places-list tabs__content';
@@ -22,17 +22,17 @@ export default function MainPageContent({renderMap, currentCity, currentOffers, 
   const [activeCard, setActiveCard] = useState<OfferCardType | null>(null);
   const [currentSorting, setCurrentSorting] = useState<SortingType>(SORT_BY_VALUES[0]);
 
-  function handleOfferCardMouseEnter(card: OfferCardType): void {
+  const handleOfferCardMouseEnter = useCallback((card: OfferCardType): void => {
     setActiveCard(card);
-  }
+  }, []);
 
-  function handleOfferCardMouseLeave(): void {
+  const handleOfferCardMouseLeave = useCallback((): void =>{
     setActiveCard(null);
-  }
+  }, []);
 
-  function handleSortingChange(sortBy: SortingType): void {
+  const handleSortingChange = useCallback((sortBy: SortingType): void => {
     setCurrentSorting(sortBy);
-  }
+  }, []);
 
   return offersAmount > 0 ? (
     <div className="cities">

@@ -10,9 +10,8 @@ import { getCurrentCity } from '../../store/city/city.selectors';
 import { getDetailedOffer, getNearbyOffers } from '../../store/offers-process/offers-process.selectors';
 import Reviews from '../../components/reviews/reviews';
 import { OfferImage, OfferFeatures, OfferGoods, OfferHost } from './components';
-import BookmarkButton from '../../components/bookmark-button/bookmark-button';
 import { OFFER_BOOKMARK_IMAGE_SIZE } from '../../const';
-import { useEffect } from 'react';
+import { MemoBookmarkButton as BookmarkButton} from '../../components/bookmark-button/bookmark-button';
 
 const MAP_CLASS = 'offer__map';
 const NEAR_OFFER_BLOCK_CLASS = 'near-places';
