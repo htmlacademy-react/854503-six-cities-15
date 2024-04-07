@@ -55,12 +55,12 @@ export const fetchFavoriteOffersAction = createAsyncThunk<OfferCardType[], undef
   }
 );
 
-export const addOfferToFavoriteAction = createAsyncThunk<Offer, {offerId: string; status: number}, {
+export const changeOfferFavoriteStatusAction = createAsyncThunk<Offer, {offerId: string; status: number}, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
-  'offers/addOfferToFavorite',
+  'offers/changeOfferFavoriteStatus',
   async ({offerId, status}, {extra: api}) => {
     const {data} = await api.post<Offer>(`${Endpoints.Favorites}/${offerId}/${status}`);
 

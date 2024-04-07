@@ -4,7 +4,7 @@ import { AppRoute, DEFAULT_BOOKMARK_IMAGE_SIZE } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getAuthCheckedStatus } from '../../store/user-process/user-process.selectors';
 import { ImageSizeType } from '../../types';
-import { addOfferToFavoriteAction } from '../../store/offers-process/offers-process.thunks';
+import { changeOfferFavoriteStatusAction } from '../../store/offers-process/offers-process.thunks';
 import { getOffersDataUpdating } from '../../store/offers-process/offers-process.selectors';
 
 type BookmarkButtonProps = {
@@ -35,7 +35,7 @@ function BookmarkButton({
       navigate(AppRoute.Login);
     }
 
-    dispatch(addOfferToFavoriteAction({
+    dispatch(changeOfferFavoriteStatusAction({
       offerId,
       status: Number(!isFavorite)
     }));

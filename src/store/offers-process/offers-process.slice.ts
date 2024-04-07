@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { Offer, OfferCardType, OffersProcess } from '../../types';
-import { addOfferToFavoriteAction, fetchFavoriteOffersAction, fetchNearbyOffersAction, fetchOfferDataAction, fetchOffersAction } from './offers-process.thunks';
+import { changeOfferFavoriteStatusAction, fetchFavoriteOffersAction, fetchNearbyOffersAction, fetchOfferDataAction, fetchOffersAction } from './offers-process.thunks';
 
 const initialState: OffersProcess = {
   isOffersDataLoading: false,
@@ -65,10 +65,10 @@ export const offersProcess = createSlice({
       .addCase(fetchFavoriteOffersAction.rejected, (state) => {
         state.isOffersDataLoading = false;
       })
-      .addCase(addOfferToFavoriteAction.pending, (state) => {
+      .addCase(changeOfferFavoriteStatusAction.pending, (state) => {
         state.isOffersDataUpdating = true;
       })
-      .addCase(addOfferToFavoriteAction.fulfilled, (state, action: PayloadAction<Offer>) => {
+      .addCase(changeOfferFavoriteStatusAction.fulfilled, (state, action: PayloadAction<Offer>) => {
         const offer = state.offers.find((item) => item.id === action.payload.id);
 
         if (offer) {
@@ -83,12 +83,15 @@ export const offersProcess = createSlice({
               state.favoriteOffers = state.favoriteOffers.filter((item) => item.id !== favoriteOffer.id);
             }
           }
+
+          if (offer.id === state.detailedOffer?.id) {
+            state.detailedOffer.isFavorite = offer.isFavorite;
+          }
         }
 
-        state.detailedOffer = action.payload;
         state.isOffersDataUpdating = false;
       })
-      .addCase(addOfferToFavoriteAction.rejected, (state) => {
+      .addCase(changeOfferFavoriteStatusAction.rejected, (state) => {
         state.isOffersDataUpdating = false;
       });
   }
