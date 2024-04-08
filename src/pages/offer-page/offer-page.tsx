@@ -4,7 +4,7 @@ import { City, Offer, OfferCardType } from '../../types';
 import NotFoundPage from '../not-found-page/not-found-page';
 import { RenderMapFunctionType } from '../../types';
 import OffersList from '../../components/offers-list/offers-list';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getRatingWidth } from '../../common/utils';
 import { getCurrentCity } from '../../store/city/city.selectors';
 import { getDetailedOffer, getNearbyOffers } from '../../store/offers-process/offers-process.selectors';
@@ -12,19 +12,35 @@ import Reviews from '../../components/reviews/reviews';
 import { OfferImage, OfferFeatures, OfferGoods, OfferHost } from './components';
 import { OFFER_BOOKMARK_IMAGE_SIZE } from '../../const';
 import { MemoBookmarkButton as BookmarkButton} from '../../components/bookmark-button/bookmark-button';
+import { useParams } from 'react-router-dom';
+import { fetchNearbyOffersAction, fetchOfferDataAction } from '../../store/offers-process/offers-process.thunks';
+import { useEffect } from 'react';
+import { fetchReviewsAction } from '../../store/reviews-process/reviews-process.thunks';
 
 const MAP_CLASS = 'offer__map';
 const NEAR_OFFER_BLOCK_CLASS = 'near-places';
 const OFFER_BLOCK_CLASS = 'offer';
+const MAX_IMAGE_AMOUNT = 6;
 
 type OfferPageProps = {
   renderMap: RenderMapFunctionType;
 }
 
 export default function OfferPage({renderMap}: OfferPageProps): JSX.Element {
+  const params = useParams();
+  const offerId = params.id || '';
+  const dispatch = useAppDispatch();
+
   const offerData: Offer | null = useAppSelector(getDetailedOffer);
   const nearbyOffers: OfferCardType[] = useAppSelector(getNearbyOffers);
   const city: City = useAppSelector(getCurrentCity);
+
+  useEffect(() => {
+    dispatch(fetchOfferDataAction(offerId));
+    dispatch(fetchReviewsAction(offerId));
+    dispatch(fetchNearbyOffersAction(offerId));
+  }, [offerId, dispatch]);
+
 
   return !offerData ? (
     <NotFoundPage />
@@ -39,7 +55,7 @@ export default function OfferPage({renderMap}: OfferPageProps): JSX.Element {
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
               {
-                offerData.images.map((image) => (
+                offerData.images.slice(0, MAX_IMAGE_AMOUNT).map((image) => (
                   <OfferImage url={image} key={image} />
                 ))
               }

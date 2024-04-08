@@ -1,8 +1,9 @@
-import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
-import { useAppDispatch } from '../../hooks';
+import { ChangeEvent, FormEvent, Fragment, useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { UserReview } from '../../types';
 import { postUserReviewAction } from '../../store/reviews-process/reviews-process.thunks';
 import { toast } from 'react-toastify';
+import { getLoadingStatus, getUserReviewLoading } from '../../store/reviews-process/reviews-process.selectors';
 
 const MIN_REVIEW_LENGTH = 50;
 const MAX_REVIEW_LENGTH = 300;
@@ -19,8 +20,7 @@ const RATING_MAP: Record<string, string> = {
   5: 'perfect'
 };
 
-function onRatingInputChange(evt: ChangeEvent<HTMLInputElement>, handler: (value: number) => void) {
-  evt.preventDefault();
+function handleRatingInputChange(evt: ChangeEvent<HTMLInputElement>, handler: (value: number) => void) {
   handler(Number(evt.target.value));
 }
 
@@ -31,27 +31,32 @@ function onMessageTextAreaChange(evt: ChangeEvent<HTMLTextAreaElement>, handler:
 
 export default function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const isLoading = useAppSelector(getUserReviewLoading);
+  const isSucceeded = useAppSelector(getLoadingStatus);
 
   const [rating, setRating] = useState(0);
   const [message, setMessage] = useState('');
-  const [isPending, setIsPending] = useState(false);
 
   function clearForm() {
     setRating(0);
     setMessage('');
   }
 
+  useEffect(() => {
+    if (!isLoading && isSucceeded) {
+      clearForm();
+    }
+  },[isLoading, isSucceeded]);
+
   function isValid() {
-    return rating && (message.length >= MIN_REVIEW_LENGTH && message.length <= MAX_REVIEW_LENGTH);
+    return !!rating && (message.length >= MIN_REVIEW_LENGTH && message.length <= MAX_REVIEW_LENGTH);
   }
 
   function handleFormSubmit(evt: FormEvent<HTMLFormElement>) {
     evt.preventDefault();
-    setIsPending(true);
 
     if (!isValid()) {
       toast.warn('Form is not valid');
-      setIsPending(false);
       return;
     }
 
@@ -64,9 +69,6 @@ export default function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
     };
 
     dispatch(postUserReviewAction(userReview));
-
-    clearForm();
-    setIsPending(false);
   }
 
   return (
@@ -83,8 +85,8 @@ export default function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
                 id={`${item}-stars`}
                 type="radio"
                 checked={Number(item) === rating}
-                disabled={isPending}
-                onChange={(evt) => onRatingInputChange(evt, setRating)}
+                disabled={isLoading}
+                onChange={(evt) => handleRatingInputChange(evt, setRating)}
               />
               <label
                 htmlFor={`${item}-stars`}
@@ -105,7 +107,7 @@ export default function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={message}
-        disabled={isPending}
+        disabled={isLoading}
         onChange={(evt) => onMessageTextAreaChange(evt, setMessage)}
       >
       </textarea>
@@ -114,11 +116,11 @@ export default function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
         <button
-          disabled={isPending}
           className="reviews__submit form__submit button"
           type="submit"
+          disabled={isLoading || !isValid()}
         >
-          Submit
+          {isLoading ? 'Loading...' : 'Submit'}
         </button>
       </div>
     </form>

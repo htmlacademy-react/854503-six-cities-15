@@ -5,6 +5,8 @@ import { fetchReviewsAction, postUserReviewAction } from './reviews-process.thun
 
 const initialState: ReviewsProcess = {
   isReviewsDataLoading: false,
+  isUserReviewLoading: false,
+  isSucceeded: true,
   reviews: []
 };
 
@@ -25,14 +27,17 @@ export const reviewsProcess = createSlice({
         state.isReviewsDataLoading = false;
       })
       .addCase(postUserReviewAction.pending, (state) => {
-        state.isReviewsDataLoading = true;
+        state.isUserReviewLoading = true;
+        state.isSucceeded = false;
       })
       .addCase(postUserReviewAction.fulfilled, (state, action: PayloadAction<ReviewType>) => {
         state.reviews.push(action.payload);
-        state.isReviewsDataLoading = false;
+        state.isUserReviewLoading = false;
+        state.isSucceeded = true;
       })
       .addCase(postUserReviewAction.rejected, (state) => {
-        state.isReviewsDataLoading = false;
+        state.isUserReviewLoading = false;
+        state.isSucceeded = false;
       });
   }
 });

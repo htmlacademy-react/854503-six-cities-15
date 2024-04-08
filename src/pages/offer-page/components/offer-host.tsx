@@ -18,9 +18,13 @@ export default function OfferHost({isPro, name, avatarUrl}: OfferHostProps): JSX
       <span className="offer__user-name">
         {name}
       </span>
-      <span className="offer__user-status">
-        {isPro}
-      </span>
+      {
+        isPro && (
+          <span className="offer__user-status">
+            Pro
+          </span>
+        )
+      }
     </div>
   );
 }

@@ -2,9 +2,6 @@ import { Link } from 'react-router-dom';
 import { AppRoute, DEFAULT_OFFER_CARD_IMAGE_SIZE } from '../../const';
 import { ImageSizeType, OfferCardType } from '../../types';
 import { getRatingWidth } from '../../common/utils';
-import { useAppDispatch } from '../../hooks';
-import { fetchNearbyOffersAction, fetchOfferDataAction } from '../../store/offers-process/offers-process.thunks';
-import { fetchReviewsAction } from '../../store/reviews-process/reviews-process.thunks';
 import { MemoBookmarkButton as BookmarkButton} from '../bookmark-button/bookmark-button';
 import { memo } from 'react';
 
@@ -18,8 +15,6 @@ type OfferCardProps = {
   onOfferCardMouseLeave?: () => void;
 }
 function OfferCard(props: OfferCardProps): JSX.Element {
-  const dispatch = useAppDispatch();
-
   const {
     offerCard,
     onOfferCardMouseEnter,
@@ -27,12 +22,6 @@ function OfferCard(props: OfferCardProps): JSX.Element {
     blockClass,
     imageSize = DEFAULT_OFFER_CARD_IMAGE_SIZE
   } = props;
-
-  function handleOfferCardClick(): void {
-    dispatch(fetchOfferDataAction(offerCard.id));
-    dispatch(fetchReviewsAction(offerCard.id));
-    dispatch(fetchNearbyOffersAction(offerCard.id));
-  }
 
   return (
     <article
@@ -48,7 +37,7 @@ function OfferCard(props: OfferCardProps): JSX.Element {
           ''
       }
       <div className={`${blockClass}__image-wrapper place-card__image-wrapper`}>
-        <Link onClick={handleOfferCardClick} to={`${AppRoute.Offer}/${offerCard.id}`}>
+        <Link to={`${AppRoute.Offer}/${offerCard.id}`}>
           <img className='place-card__image'
             src={offerCard.previewImage}
             width={imageSize.width}
@@ -76,7 +65,7 @@ function OfferCard(props: OfferCardProps): JSX.Element {
           </div>
         </div>
         <h2 className='place-card__name'>
-          <Link onClick={handleOfferCardClick} to={`${AppRoute.Offer}/${offerCard.id}`}>{offerCard.title}</Link>
+          <Link to={`${AppRoute.Offer}/${offerCard.id}`}>{offerCard.title}</Link>
         </h2>
         <p className='place-card__type'>{offerCard.type}</p>
       </div>

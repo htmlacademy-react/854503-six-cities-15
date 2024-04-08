@@ -1,5 +1,5 @@
 export default function LoadingScreen(): JSX.Element {
   return (
-    <p>Loading ...</p>
+    <p className="loading-screen">Loading ...</p>
   );
 }

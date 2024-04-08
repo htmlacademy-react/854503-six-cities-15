@@ -35,25 +35,13 @@ export const offersProcess = createSlice({
       .addCase(fetchOffersAction.rejected, (state) => {
         state.isOffersDataLoading = false;
       })
-      .addCase(fetchOfferDataAction.pending, (state) => {
-        state.isOffersDataLoading = true;
-      })
       .addCase(fetchOfferDataAction.fulfilled, (state, action: PayloadAction<Offer>) => {
+
         state.detailedOffer = action.payload;
-        state.isOffersDataLoading = false;
-      })
-      .addCase(fetchOfferDataAction.rejected, (state) => {
-        state.isOffersDataLoading = false;
-      })
-      .addCase(fetchNearbyOffersAction.pending, (state) => {
-        state.isOffersDataLoading = true;
       })
       .addCase(fetchNearbyOffersAction.fulfilled, (state, action: PayloadAction<OfferCardType[]>) => {
         state.nearbyOffers = action.payload;
-        state.isOffersDataLoading = false;
-      })
-      .addCase(fetchNearbyOffersAction.rejected, (state) => {
-        state.isOffersDataLoading = false;
+
       })
       .addCase(fetchFavoriteOffersAction.pending, (state) => {
         state.isOffersDataLoading = true;

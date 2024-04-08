@@ -15,7 +15,7 @@ type ReviewsProps = {
 export default function Reviews({offerId}: ReviewsProps): JSX.Element {
   const reviews: ReviewType[] = useAppSelector(getReviews);
   const isAuth = useAppSelector(getAuthCheckedStatus);
-  const sortedReviews = sortReviewByDate(reviews);
+  const sortedReviews: ReviewType[] = sortReviewByDate(reviews);
 
   return (
     <section className="offer__reviews reviews">
