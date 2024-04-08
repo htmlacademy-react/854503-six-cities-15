@@ -9,20 +9,11 @@ import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import { HelmetProvider } from 'react-helmet-async';
 import OfferPage from '../../pages/offer-page/offer-page';
 import withMap from '../../hocs/with-map/with-map';
-import { useAppSelector } from '../../hooks';
-import LoadingScreen from '../loading-screen/loading-screen';
 import HistoryRouter from '../history-route/history-route';
 import { browserHistory } from '../../browser-history';
-import { getOffersDataLoading } from '../../store/offers-process/offers-process.selectors';
 const OfferPageWrapped = withMap(OfferPage);
 
 export default function App(): JSX.Element {
-  const isOffersDataLoading = useAppSelector(getOffersDataLoading);
-
-  if (isOffersDataLoading) {
-    return <LoadingScreen />;
-  }
-
   return (
     <HelmetProvider>
       <HistoryRouter history={browserHistory}>

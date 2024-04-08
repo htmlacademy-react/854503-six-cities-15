@@ -1,19 +1,19 @@
-import { CitiesNames, City } from './types';
+import { CitiesNames, City, ImageSizeType } from './types';
 
 export const RATING_WIDTH_STEP = 20;
-export const DEFAULT_OFFER_CARD_IMAGE_SIZE = {
+export const DEFAULT_OFFER_CARD_IMAGE_SIZE: ImageSizeType = {
   width: 260,
   height: 200
 };
-export const OFFER_CARD_IMAGE_SIZE = {
+export const OFFER_CARD_IMAGE_SIZE: ImageSizeType = {
   width: 150,
   height: 110
 };
-export const DEFAULT_BOOKMARK_IMAGE_SIZE = {
+export const DEFAULT_BOOKMARK_IMAGE_SIZE: ImageSizeType = {
   width: 18,
   height: 19
 };
-export const OFFER_BOOKMARK_IMAGE_SIZE = {
+export const OFFER_BOOKMARK_IMAGE_SIZE: ImageSizeType = {
   width: 31,
   height: 33
 };

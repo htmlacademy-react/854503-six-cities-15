@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { City, Offer, OfferCardType } from '../../types';
 import useMap from './use-map';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from './const';
-import leaflet from 'leaflet';
+import leaflet, { layerGroup } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { ActivePoint } from '../../types/map';
 
@@ -45,6 +45,8 @@ export default function Map({
 
   useEffect(() => {
     if (map) {
+      const markers = layerGroup().addTo(map);
+
       map.setView(
         [city.location.latitude, city.location.longitude],
         city.location.zoom
@@ -59,8 +61,12 @@ export default function Map({
               currentCustomIcon :
               defaultCustomIcon
           })
-          .addTo(map);
+          .addTo(markers);
       });
+
+      return () => {
+        map.removeLayer(markers);
+      };
     }
   }, [map, currentOffers, city, activeCardId]);
 

@@ -6,15 +6,18 @@ import { useAppSelector } from '../../hooks';
 import { Cities } from '../../const';
 import { sortOffersByCity } from '../../common/utils';
 import { getCurrentCity } from '../../store/city/city.selectors';
-import { getOffers } from '../../store/offers-process/offers-process.selectors';
+import { getOffers, getOffersDataLoading } from '../../store/offers-process/offers-process.selectors';
 import MainPageContent from '../../components/main-content/main-content';
 import withMap from '../../hocs/with-map/with-map';
+import LoadingScreen from '../../components/loading-screen/loading-screen';
+import './styles.css';
 
 const MainPageContentWrapped = withMap(MainPageContent);
 
 export default function MainPage() {
   const currentCity: City = useAppSelector(getCurrentCity);
   const offers: OfferCardType[] = useAppSelector(getOffers);
+  const isOffersDataLoading = useAppSelector(getOffersDataLoading);
 
   const currentOffers: OfferCardType[] = sortOffersByCity(offers)[currentCity.name as Cities];
   const offersAmount = currentOffers.length || 0;
@@ -30,7 +33,15 @@ export default function MainPage() {
         <div className="tabs">
           <LocationsList />
         </div>
-        <MainPageContentWrapped currentCity={currentCity} currentOffers={currentOffers} offersAmount={offersAmount} />
+        {
+          isOffersDataLoading ?
+            <LoadingScreen /> :
+            <MainPageContentWrapped
+              currentCity={currentCity}
+              currentOffers={currentOffers}
+              offersAmount={offersAmount}
+            />
+        }
       </main>
     </div>
   );

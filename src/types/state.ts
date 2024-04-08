@@ -26,5 +26,7 @@ export type OffersProcess = {
 
 export type ReviewsProcess = {
   isReviewsDataLoading: boolean;
+  isUserReviewLoading: boolean;
+  isSucceeded: boolean;
   reviews: ReviewType[];
 }
