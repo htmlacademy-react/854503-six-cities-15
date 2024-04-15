@@ -1,6 +1,6 @@
-import { makeFakeReview } from '../../common/test-utils';
-import { reviewsProcess } from './reviews-process.slice';
-import { fetchReviewsAction, postUserReviewAction } from './reviews-process.thunks';
+import { makeFakeReview } from '../../../common/test-utils';
+import { reviewsProcess } from '../reviews-process.slice';
+import { fetchReviewsAction, postUserReviewAction } from '../reviews-process.thunks';
 
 describe('ReviewsProcess Slice', () => {
   const initialState = {

@@ -1,7 +1,7 @@
-import { makeFakeProUserData } from '../../common/test-utils';
-import { AuthorizationStatus } from '../../const';
-import { userProcess } from './user-process.slice';
-import { checkAuthAction, loginAction } from './user-process.thunks';
+import { makeFakeProUserData } from '../../../common/test-utils';
+import { AuthorizationStatus } from '../../../const';
+import { userProcess } from '../user-process.slice';
+import { checkAuthAction, loginAction } from '../user-process.thunks';
 
 describe('UserProcess Slice', () => {
   it('should return initial state with empty action', () => {

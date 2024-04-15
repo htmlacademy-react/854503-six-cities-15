@@ -1,6 +1,6 @@
-import { makeFakeDetailedOffer, makeFakeOffer } from '../../common/test-utils';
-import { clearFavoriteOffers, offersProcess, setOffersDataLoadingStatus } from './offers-process.slice';
-import { changeOfferFavoriteStatusAction, fetchFavoriteOffersAction, fetchNearbyOffersAction, fetchOfferDataAction, fetchOffersAction } from './offers-process.thunks';
+import { makeFakeDetailedOffer, makeFakeOffer } from '../../../common/test-utils';
+import { clearFavoriteOffers, offersProcess, setOffersDataLoadingStatus } from '../offers-process.slice';
+import { changeOfferFavoriteStatusAction, fetchFavoriteOffersAction, fetchNearbyOffersAction, fetchOfferDataAction, fetchOffersAction } from '../offers-process.thunks';
 
 describe('OffersProcess Slice', () => {
   const initialState = {

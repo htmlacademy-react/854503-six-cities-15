@@ -1,6 +1,5 @@
-// import { describe, expect, it } from 'vitest';
-import { getCologneObject, getParisObject } from '../../common/test-utils';
-import { changeCity, cityData } from './city.slice';
+import { getCologneObject, getParisObject } from '../../../common/test-utils';
+import { changeCity, cityData } from '../city.slice';
 
 describe('City Slice', () => {
   it('should return initial state with empty action', () => {
